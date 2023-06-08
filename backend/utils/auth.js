@@ -51,11 +51,12 @@ const restoreUser = (req, res, next) => {
       const { id } = jwtPayload.data;
       req.user = await User.findByPk(id, {
         attributes: {
-          include: ['email', 'createdAt', 'updatedAt']
+          include: ['email', 'firstName', 'lastName', 'createdAt', 'updatedAt']
         }
       });
       // if no user found, clear cookie
       if (!req.user) res.clearCookie('token');
+      //console.log("restore user", req.user);
       return next();
     } catch (e) {
       // if error occured, clear cookie
