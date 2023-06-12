@@ -11,6 +11,34 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      // User -> Spot: one-to-many
+      User.hasMany(models.Spot, { foreignKey: 'ownerId' });
+
+      // User -> Booking: one-to-many
+      User.hasMany(models.Booking, { foreignKey: 'userId' });
+
+      // User -> Review: one-to-many
+      User.hasMany(models.Review, { foreignKey: 'userId' });
+
+      // User -> Spot: many-to-many, through Booking, as adminOf,
+      // use user.getAdminOf() to perform query
+      User.belongsToMany(models.Spot, {
+        through: models.Booking,
+        foreignKey: 'userId',
+        otherKey: 'spotId',
+        as: 'adminOf'
+      });
+
+      // User -> Spot: many-to-many, through Review, as commenterOf,
+      // use user.getCommenterOf() to perform query
+      User.belongsToMany(models.Spot, {
+        through: models.Review,
+        foreignKey: 'userId',
+        otherKey: 'spotId',
+        as: 'commenterOf'
+      });
+
     }
   }
   User.init({

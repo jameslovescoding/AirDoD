@@ -8,9 +8,9 @@
 
 ## API Documentation
 
-## USER AUTHENTICATION/AUTHORIZATION
+## Part 1: USER AUTHENTICATION/AUTHORIZATION
 
-### All endpoints that require authentication
+### 1-1 All endpoints that require authentication
 
 All endpoints that require a current user to be logged in.
 
@@ -27,7 +27,7 @@ All endpoints that require a current user to be logged in.
     }
     ```
 
-### All endpoints that require proper authorization
+### 1-2 All endpoints that require proper authorization
 
 All endpoints that require authentication and the current user does not have the
 correct role(s) or permission(s).
@@ -45,7 +45,7 @@ correct role(s) or permission(s).
     }
     ```
 
-### Get the Current User
+### 1-3 Get the Current User
 
 Returns the information about the current user that is logged in.
 
@@ -91,7 +91,7 @@ Returns the information about the current user that is logged in.
     }
     ```
 
-### Log In a User
+### 1-4 Log In a User
 
 Logs in a current user with valid credentials and returns the current user's
 information.
@@ -163,7 +163,7 @@ information.
     }
     ```
 
-### Sign Up a User
+### 1-5 Sign Up a User
 
 Creates a new user, logs them in as the current user, and returns the current
 user's information.
@@ -258,9 +258,9 @@ user's information.
     }
     ```
 
-## SPOTS
+## Part 2: SPOTS
 
-### Get all Spots
+### 2-1 Get all Spots
 
 Returns all the spots.
 
@@ -306,7 +306,7 @@ Returns all the spots.
     }
     ```
 
-### Get all Spots owned by the Current User
+### 2-2 Get all Spots owned by the Current User
 
 Returns all the spots owned (created) by the current user.
 
@@ -352,7 +352,7 @@ Returns all the spots owned (created) by the current user.
     }
     ```
 
-### Get details of a Spot from an id
+### 2-3 Get details of a Spot from an id
 
 Returns the details of a spot specified by its id.
 
@@ -423,7 +423,7 @@ Returns the details of a spot specified by its id.
     }
     ```
 
-### Create a Spot
+### 2-4 Create a Spot
 
 Creates and returns a new spot.
 
@@ -502,7 +502,7 @@ Creates and returns a new spot.
     }
     ```
 
-### Add an Image to a Spot based on the Spot's id
+### 2-5 Add an Image to a Spot based on the Spot's id
 
 Create and return a new image for a spot specified by id.
 
@@ -554,7 +554,7 @@ Create and return a new image for a spot specified by id.
     }
     ```
 
-### Edit a Spot
+### 2-6 Edit a Spot
 
 Updates and returns an existing spot.
 
@@ -646,7 +646,7 @@ Updates and returns an existing spot.
     }
     ```
 
-### Delete a Spot
+### 2-7 Delete a Spot
 
 Deletes an existing spot.
 
@@ -687,9 +687,9 @@ Deletes an existing spot.
     }
     ```
 
-## REVIEWS
+## Part 3: REVIEWS
 
-### Get all Reviews of the Current User
+### 3-1 Get all Reviews of the Current User
 
 Returns all the reviews written by the current user.
 
@@ -751,7 +751,7 @@ Returns all the reviews written by the current user.
     }
     ```
 
-### Get all Reviews by a Spot's id
+### 3-2 Get all Reviews by a Spot's id
 
 Returns all the reviews that belong to a spot specified by id.
 
@@ -812,7 +812,7 @@ Returns all the reviews that belong to a spot specified by id.
     }
     ```
 
-### Create a Review for a Spot based on the Spot's id
+### 3-3 Create a Review for a Spot based on the Spot's id
 
 Create and return a new review for a spot specified by id.
 
@@ -895,7 +895,7 @@ Create and return a new review for a spot specified by id.
     }
     ```
 
-### Add an Image to a Review based on the Review's id
+### 3-4 Add an Image to a Review based on the Review's id
 
 Create and return a new image for a review specified by id.
 
@@ -958,7 +958,7 @@ Create and return a new image for a review specified by id.
     }
     ```
 
-### Edit a Review
+### 3-5 Edit a Review
 
 Update and return an existing review.
 
@@ -1030,7 +1030,7 @@ Update and return an existing review.
     }
     ```
 
-### Delete a Review
+### 3-6 Delete a Review
 
 Delete an existing review.
 
@@ -1071,9 +1071,9 @@ Delete an existing review.
     }
     ```
 
-## BOOKINGS
+## Part 4: BOOKINGS
 
-### Get all of the Current User's Bookings
+### 4-1 Get all of the Current User's Bookings
 
 Return all the bookings that the current user has made.
 
@@ -1124,7 +1124,7 @@ Return all the bookings that the current user has made.
     }
     ```
 
-### Get all Bookings for a Spot based on the Spot's id
+### 4-2 Get all Bookings for a Spot based on the Spot's id
 
 Return all the bookings for a spot specified by id.
 
@@ -1197,7 +1197,7 @@ Return all the bookings for a spot specified by id.
     }
     ```
 
-### Create a Booking from a Spot based on the Spot's id
+### 4-3 Create a Booking from a Spot based on the Spot's id
 
 Create and return a new booking from a spot specified by id.
 
@@ -1282,7 +1282,7 @@ Create and return a new booking from a spot specified by id.
     }
     ```
 
-### Edit a Booking
+### 4-4 Edit a Booking
 
 Update and return an existing booking.
 
@@ -1381,7 +1381,7 @@ Update and return an existing booking.
     }
     ```
 
-### Delete a Booking
+### 4-5 Delete a Booking
 
 Delete an existing booking.
 
@@ -1435,9 +1435,9 @@ Delete an existing booking.
     }
     ```
 
-## IMAGES
+## Part 5: IMAGES
 
-### Delete a Spot Image
+### 5-1 Delete a Spot Image
 
 Delete an existing image for a Spot.
 
@@ -1478,7 +1478,7 @@ Delete an existing image for a Spot.
     }
     ```
 
-### Delete a Review Image
+### 5-2 Delete a Review Image
 
 Delete an existing image for a Review.
 
@@ -1519,9 +1519,9 @@ Delete an existing image for a Review.
     }
     ```
 
-## Add Query Filters to Get All Spots
+## Part 6: Add Query Filters to Get All Spots
 
-Return spots filtered by query parameters.
+### 6-1 Return spots filtered by query parameters.
 
 * Require Authentication: false
 * Request
@@ -1533,78 +1533,6 @@ Return spots filtered by query parameters.
   <!-- * Method: ? -->
   <!-- * URL: ? -->
   <!--!!END_ADD -->
-  * Query Parameters
-    * page: integer, minimum: 1, maximum: 10, default: 1
-    * size: integer, minimum: 1, maximum: 20, default: 20
-    * minLat: decimal, optional
-    * maxLat: decimal, optional
-    * minLng: decimal, optional
-    * maxLng: decimal, optional
-    * minPrice: decimal, optional, minimum: 0
-    * maxPrice: decimal, optional, minimum: 0
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Spots": [
-        {
-          "id": 1,
-          "ownerId": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
-          "name": "App Academy",
-          "description": "Place where web developers are created",
-          "price": 123,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "avgRating": 4.5,
-          "previewImage": "image url"
-        }
-      ],
-      "page": 2,
-      "size": 25
-    }
-    ```
-
-* Error Response: Query parameter validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "page": "Page must be greater than or equal to 1",
-        "size": "Size must be greater than or equal to 1",
-        "maxLat": "Maximum latitude is invalid",
-        "minLat": "Minimum latitude is invalid",
-        "minLng": "Maximum longitude is invalid",
-        "maxLng": "Minimum longitude is invalid",
-        "minPrice": "Minimum price must be greater than or equal to 0",
-        "maxPrice": "Maximum price must be greater than or equal to 0"
-      }
-    }
-    ```
-
-
-Return spots filtered by query parameters.
-
-* Require Authentication: false
-* Request
-  * Method: ?
-  * URL: ?
   * Query Parameters
     * page: integer, minimum: 1, maximum: 10, default: 1
     * size: integer, minimum: 1, maximum: 20, default: 20
