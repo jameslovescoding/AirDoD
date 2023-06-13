@@ -8,34 +8,58 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Spots', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
+      ownerId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      },
+      address: {
+        allowNull: false,
+        type: Sequelize.STRING(300)
+      },
+      city: {
+        allowNull: false,
+        type: Sequelize.STRING(100)
+      },
+      state: {
         allowNull: false,
         type: Sequelize.STRING(30)
       },
-      lastName: {
+      country: {
         allowNull: false,
         type: Sequelize.STRING(30)
       },
-      username: {
+      lat: {
         allowNull: false,
-        unique: true,
-        type: Sequelize.STRING(30)
+        type: Sequelize.DECIMAL(3, 7)
       },
-      email: {
+      lng: {
         allowNull: false,
-        unique: true,
-        type: Sequelize.STRING(256)
+        type: Sequelize.DECIMAL(3, 7)
       },
-      hashedPassword: {
+      name: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING(100)
+      },
+      description: {
+        allowNull: false,
+        type: Sequelize.STRING(500)
+      },
+      price: {
+        allowNull: false,
+        type: Sequelize.DECIMAL(5, 2)
       },
       createdAt: {
         allowNull: false,
@@ -50,7 +74,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Users';
+    options.tableName = 'Spots';
     await queryInterface.dropTable(options);
   }
 };
