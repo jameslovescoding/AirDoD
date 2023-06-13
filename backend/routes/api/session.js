@@ -10,20 +10,23 @@ const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+const { environment } = require('../../config');
+const isProduction = environment === 'production';
+
 const router = express.Router();
 
 const validateLogin = [
   check('credential')
     .exists({ checkFalsy: true })
     .notEmpty()
-    .withMessage('Please provide a valid email or username.'),
+    .withMessage('Email or username is required'),
   check('password')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide a password.'),
+    .withMessage('Password is required'),
   handleValidationErrors
 ];
 
-// Log in
+// 1-4 Log in
 router.post('/', validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
 
@@ -61,13 +64,36 @@ router.post('/', validateLogin, async (req, res, next) => {
   });
 });
 
+// log in error handling
+router.use('/', (err, req, res, next) => {
+  console.log("log in error handle")
+  resObj = {};
+  if (err.status === 400) {
+    res.status(400);
+    resObj.message = "Bad Request";
+    resObj.errors = {};
+    if (err.errors.credential) {
+      resObj.errors.credential = "Email or username is required";
+    }
+    if (err.errors.password) {
+      resObj.errors.password = "Password is required";
+    }
+    return res.json(resObj);
+  }
+  if (err.status === 401) {
+    res.status(401);
+    resObj.message = "Invalid credentials";
+    return res.json(resObj);
+  }
+});
+
 // Log out
 router.delete('/', (_req, res) => {
   res.clearCookie('token');
   return res.json({ message: 'success' });
 });
 
-// Restore session user
+// 1-3 Get the Current User / Restore session user
 router.get('/', (req, res) => {
   const { user } = req;
   if (user) {
