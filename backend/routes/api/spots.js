@@ -10,21 +10,11 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   const spots = await Spot.findAll({
     include: [
-      {
-        model: SpotImage,
-        attributes: ['url'],
-        where: { preview: true },
-        required: false
-      },
-      {
-        model: Review,
-        attributes: ['stars']
-      }
+      { model: SpotImage, attributes: ['url'], where: { preview: true }, required: false },
+      { model: Review, attributes: ['stars'] }
     ]
   });
-
   const resObj = {};
-
   resObj.Spots = spots.map(spot => {
     // convert to JSON object
     const spotJSON = spot.toJSON();
@@ -46,7 +36,6 @@ router.get('/', async (req, res, next) => {
     delete spotJSON["SpotImages"];
     return spotJSON;
   });
-
   res.json(resObj)
 });
 
@@ -58,26 +47,15 @@ router.get('/current', async (req, res, next) => {
     res.status(401);
     return res.json({ "message": "Authentication required" });
   }
-  //
   const { id } = req.user;
   const spots = await Spot.findAll({
     where: { ownerId: id },
     include: [
-      {
-        model: SpotImage,
-        attributes: [['url', 'previewImage']],
-        where: { preview: true },
-        required: false
-      },
-      {
-        model: Review,
-        attributes: ['stars']
-      }
+      { model: SpotImage, attributes: [['url', 'previewImage']], where: { preview: true }, required: false },
+      { model: Review, attributes: ['stars'] }
     ]
   });
-
   const resObj = {};
-
   resObj.Spots = spots.map(spot => {
     const spotJSON = spot.toJSON();
     // extract aggregate key
@@ -98,34 +76,24 @@ router.get('/current', async (req, res, next) => {
     delete spotJSON["SpotImages"];
     return spotJSON;
   });
-
   res.json(resObj);
 });
 
 // 2-3 Get details of a Spot from an id
 
-router.get("/:spotId", async (req, res, next) => {
+const validateGetSpotDetail = [
+  check('spotId').exists().isInt({ min: 1 }).withMessage("spotId need to be an integer and larger than 0"),
+  handleValidationErrors
+];
+
+router.get("/:spotId", validateGetSpotDetail, async (req, res, next) => {
   let { spotId } = req.params;
-  if (!spotId || !Number.isInteger(parseInt(spotId)) || parseInt(spotId) < 0) {
-    res.status(400);
-    return res.json({ message: "Invalid spotId input" })
-  }
   const spot = await Spot.findOne({
     where: { id: spotId },
     include: [
-      {
-        model: User,
-        as: 'Owner',
-        attributes: ['id', 'firstName', 'lastName']
-      },
-      {
-        model: Review,
-        attributes: ['stars']
-      },
-      {
-        model: SpotImage,
-        attributes: ['id', 'url', 'preview']
-      }
+      { model: User, as: 'Owner', attributes: ['id', 'firstName', 'lastName'] },
+      { model: Review, attributes: ['stars'] },
+      { model: SpotImage, attributes: ['id', 'url', 'preview'] }
     ]
   })
   if (!spot) {
@@ -151,7 +119,7 @@ const validateCreateSpot = [
   check('lng').exists({ checkFalsy: true }).isFloat().withMessage('Longitude is not valid'), // did not use isLatLong()
   check('name').exists({ checkFalsy: true }).isLength({ max: 50 }).withMessage('Name must be less than 50 characters'),
   check('description').exists({ checkFalsy: true }).withMessage('Description is required'),
-  check('price').exists({ checkFalsy: true }).isNumeric().withMessage('Price per day is required'),
+  check('price').exists({ checkFalsy: true }).withMessage('Price per day is required').isNumeric().withMessage('Price need to be a number'),
   handleValidationErrors
 ];
 
@@ -165,6 +133,131 @@ router.post("/", validateCreateSpot, async (req, res, next) => {
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
   const newSpot = await Spot.create({ ownerId, address, city, state, country, lat, lng, name, description, price });
   res.json(newSpot.toJSON());
+});
+
+// 2-5 Add an Image to a Spot based on the Spot's id
+
+const validateCreateSpotImage = [
+  check('url').exists().withMessage('url is required').isLength({ max: 500 }).withMessage('url max 500 long'),
+  check('preview').exists().withMessage('preview is required').isBoolean().withMessage('preview need to be a boolean'),
+  check('spotId').exists().isInt({ min: 1 }).withMessage("spotId need to be an integer and larger than 0"),
+  handleValidationErrors
+];
+
+router.post("/:spotId/images", validateCreateSpotImage, async (req, res, next) => {
+  // Handling un-authenticated situation
+  if (!req.user) {
+    res.status(401);
+    return res.json({ "message": "Authentication required" });
+  }
+  // Find the spot with spotId
+  const { spotId } = req.params;
+  const spot = await Spot.findOne({ where: { id: spotId } });
+  // Couldn't find a Spot with the specified id
+  if (!spot) {
+    res.status(404);
+    return res.json({ "message": "Spot couldn't be found" })
+  }
+  // Handle un-authorized situation
+  if (req.user.id !== spot.ownerId) {
+    res.status(403);
+    return res.json({ "message": "Forbidden" });
+  }
+  // create the spotImage
+  const { url, preview } = req.body;
+  const newSpotImage = await SpotImage.create({
+    spotId: spot.id,
+    url: url,
+    preview: preview
+  })
+  // Grab the id of newly created spotImage and return
+  const resObj = {};
+  resObj.id = newSpotImage.id;
+  resObj.url = url;
+  resObj.preview = preview;
+  res.json(resObj);
+});
+
+// 2-6 Edit a Spot
+
+const validateEditSpot = [
+  check('spotId').exists().isInt({ min: 1 }).withMessage("spotId need to be an integer and larger than 0"),
+  check('address').exists({ checkFalsy: true }).withMessage('Street address is required'),
+  check('city').exists({ checkFalsy: true }).withMessage('City is required'),
+  check('state').exists({ checkFalsy: true }).withMessage('State is required'),
+  check('country').exists({ checkFalsy: true }).withMessage('Country is required'),
+  check('lat').exists({ checkFalsy: true }).isFloat().withMessage('Latitude is not valid'), // did not use isLatLong()
+  check('lng').exists({ checkFalsy: true }).isFloat().withMessage('Longitude is not valid'), // did not use isLatLong()
+  check('name').exists({ checkFalsy: true }).isLength({ max: 50 }).withMessage('Name must be less than 50 characters'),
+  check('description').exists({ checkFalsy: true }).withMessage('Description is required'),
+  check('price').exists({ checkFalsy: true }).withMessage('Price per day is required').isNumeric().withMessage('Price need to be a number'),
+  handleValidationErrors
+];
+
+router.put('/:spotId', validateEditSpot, async (req, res, next) => {
+  // Handling un-authenticated situation
+  if (!req.user) {
+    res.status(401);
+    return res.json({ "message": "Authentication required" });
+  }
+  // Find the spot with spotId
+  const { spotId } = req.params;
+  const spot = await Spot.findOne({ where: { id: spotId } });
+  // Couldn't find a Spot with the specified id
+  if (!spot) {
+    res.status(404);
+    return res.json({ "message": "Spot couldn't be found" })
+  }
+  // Handle un-authorized situation
+  if (req.user.id !== spot.ownerId) {
+    res.status(403);
+    return res.json({ "message": "Forbidden" });
+  }
+  // Update the spot
+  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  spot.address = address;
+  spot.city = city;
+  spot.state = state;
+  spot.country = country;
+  spot.lat = lat;
+  spot.lng = lng;
+  spot.name = name;
+  spot.description = description;
+  spot.price = price;
+  // Save the update
+  await spot.save();
+  res.json(spot);
+});
+
+// 2-7 Delete a Spot
+
+const validateDeleteSpot = [
+  check('spotId').exists().isInt({ min: 1 }).withMessage("spotId need to be an integer and larger than 0"),
+  handleValidationErrors
+];
+
+router.delete("/:spotId", validateDeleteSpot, async (req, res, next) => {
+  // Handling un-authenticated situation
+  if (!req.user) {
+    res.status(401);
+    return res.json({ "message": "Authentication required" });
+  }
+  // Find the spot with spotId
+  const { spotId } = req.params;
+  const spot = await Spot.findOne({ where: { id: spotId } });
+  // Couldn't find a Spot with the specified id
+  if (!spot) {
+    res.status(404);
+    return res.json({ "message": "Spot couldn't be found" })
+  }
+  // Handle un-authorized situation
+  if (req.user.id !== spot.ownerId) {
+    res.status(403);
+    return res.json({ "message": "Forbidden" });
+  }
+  // Delete the spot
+  await spot.destroy();
+  res.json({ "message": "Successfully deleted" })
 });
 
 module.exports = router;
