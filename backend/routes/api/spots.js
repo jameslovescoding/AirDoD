@@ -12,8 +12,9 @@ router.get('/', async (req, res, next) => {
     include: [
       {
         model: SpotImage,
-        attributes: [['url', 'previewImage']],
-        where: { preview: true }
+        attributes: ['url'],
+        where: { preview: true },
+        required: false
       },
       {
         model: Review,
@@ -30,12 +31,19 @@ router.get('/', async (req, res, next) => {
     // extract aggregate key
     const { Reviews, SpotImages } = spotJSON;
     // calculate average rating
-    spotJSON.avgRating = Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length;
-    spotJSON.previewImage = SpotImages[0].previewImage;
-    // delete the unwanted key
+    if (Reviews.length) {
+      spotJSON.avgRating = Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length;
+    } else {
+      spotJSON.avgRating = null;
+    }
+    // find preview
+    if (SpotImages.length) {
+      spotJSON.previewImage = SpotImages[0].url;
+    } else {
+      spotJSON.previewImage = null;
+    }
     delete spotJSON["Reviews"];
     delete spotJSON["SpotImages"];
-    // return single element to the array
     return spotJSON;
   });
 
@@ -58,7 +66,8 @@ router.get('/current', async (req, res, next) => {
       {
         model: SpotImage,
         attributes: [['url', 'previewImage']],
-        where: { preview: true }
+        where: { preview: true },
+        required: false
       },
       {
         model: Review,
@@ -70,17 +79,23 @@ router.get('/current', async (req, res, next) => {
   const resObj = {};
 
   resObj.Spots = spots.map(spot => {
-    // convert to JSON object
     const spotJSON = spot.toJSON();
     // extract aggregate key
     const { Reviews, SpotImages } = spotJSON;
     // calculate average rating
-    spotJSON.avgRating = Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length;
-    spotJSON.previewImage = SpotImages[0].previewImage;
-    // delete the unwanted key
+    if (Reviews.length) {
+      spotJSON.avgRating = Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length;
+    } else {
+      spotJSON.avgRating = null;
+    }
+    // find preview
+    if (SpotImages.length) {
+      spotJSON.previewImage = SpotImages[0].url;
+    } else {
+      spotJSON.previewImage = null;
+    }
     delete spotJSON["Reviews"];
     delete spotJSON["SpotImages"];
-    // return single element to the array
     return spotJSON;
   });
 
