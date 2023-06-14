@@ -1,5 +1,5 @@
 const express = require('express');
-const { User, Spot, SpotImage, Review, sequelize } = require('../../db/models');
+const { User, Spot, SpotImage, Review } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 

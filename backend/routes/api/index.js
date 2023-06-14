@@ -4,6 +4,7 @@ const router = require('express').Router();
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const spotsRouter = require('./spots.js');
+const reviewsRouter = require('./reviews.js');
 const { restoreUser } = require('../../utils/auth.js');
 
 // parse and verify the token
@@ -22,9 +23,13 @@ router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
 
-// Spots
+// Spots: /api/spots
 
 router.use('/spots', spotsRouter);
+
+// Reviews: /api/reviews
+
+router.use('/reviews', reviewsRouter);
 
 // Test: POST /api/test
 
