@@ -19,23 +19,10 @@ router.get("/current", async (req, res, next) => {
       {
         model: Spot,
         attributes: [
-          'id',
-          'ownerId',
-          'address',
-          'city',
-          'state',
-          'country',
-          'lat',
-          'lng',
-          'name',
-          'price',
+          'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price',
         ],
         include: {
-          model: SpotImage,
-          attributes: ['url'],
-          where: { preview: true },
-          required: false,
-          nest: false
+          model: SpotImage, attributes: ['url'], where: { preview: true }, required: false,
         },
 
       },
@@ -45,9 +32,15 @@ router.get("/current", async (req, res, next) => {
   const resObj = {};
   resObj.Reviews = reviews.map(review => {
     const reviewJSON = review.toJSON();
+    reviewJSON.Spot.previewImage = reviewJSON.Spot.SpotImages[0].url;
+    delete reviewJSON.Spot["SpotImages"];
     return reviewJSON;
   })
   res.json(resObj);
 });
+
+// 3-4 Add an Image to a Review based on the Review's id
+
+
 
 module.exports = router;
