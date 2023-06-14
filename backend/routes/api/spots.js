@@ -286,7 +286,6 @@ router.get("/:spotId/reviews", validateGetReviewBySpot, async (req, res, next) =
   const resObj = {};
   resObj.Reviews = reviews.map(review => {
     const reviewJSON = review.toJSON();
-
     return reviewJSON;
   })
   res.json(resObj);
@@ -307,7 +306,6 @@ router.post("/:spotId/reviews", validateCreateReviewBySpot, async (req, res, nex
     res.status(401);
     return res.json({ "message": "Authentication required" });
   }
-  const { id: userId } = req.user.id;
   // Try to find the spot with spotId
   const { spotId } = req.params;
   const spot = await Spot.findOne({ where: { id: spotId } });
@@ -317,9 +315,8 @@ router.post("/:spotId/reviews", validateCreateReviewBySpot, async (req, res, nex
     return res.json({ "message": "Spot couldn't be found" })
   }
   // Check if the user has already made a review on this spot
-
   const prevReview = await Review.findOne({
-    where: { spotId: spotId, userId: userId }
+    where: { spotId: spotId, userId: req.user.id }
   })
   // If found, return status 500
   if (prevReview) {
@@ -328,9 +325,9 @@ router.post("/:spotId/reviews", validateCreateReviewBySpot, async (req, res, nex
   }
   // If not, create the new review
   const { review, stars } = req.body;
-  const newReview = Review.create({
+  const newReview = await Review.create({
     spotId: spotId,
-    userId: userId,
+    userId: req.user.id,
     review: review,
     stars: stars
   })
