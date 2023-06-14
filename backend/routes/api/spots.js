@@ -1,5 +1,5 @@
 const express = require('express');
-const { User, Spot, SpotImage, Review, sequelize } = require('../../db/models');
+const { User, Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -258,6 +258,82 @@ router.delete("/:spotId", validateDeleteSpot, async (req, res, next) => {
   // Delete the spot
   await spot.destroy();
   res.json({ "message": "Successfully deleted" })
+});
+
+// 3-2 Get all Reviews by a Spot's id
+
+const validateGetReviewBySpot = [
+  check('spotId').exists().isInt({ min: 1 }).withMessage("spotId need to be an integer and larger than 0"),
+  handleValidationErrors
+];
+
+router.get("/:spotId/reviews", validateGetReviewBySpot, async (req, res, next) => {
+  const { spotId } = req.params;
+  const spot = await Spot.findOne({ where: { id: spotId } });
+  // Couldn't find a Spot with the specified id
+  if (!spot) {
+    res.status(404);
+    return res.json({ "message": "Spot couldn't be found" })
+  }
+  // find all related reviews
+  const reviews = await Review.findAll({
+    where: { spotId: spotId },
+    include: [
+      { model: User, attributes: ['id', 'firstName', 'lastName'] },
+      { model: ReviewImage, attributes: ['id', 'url'] }
+    ]
+  })
+  const resObj = {};
+  resObj.Reviews = reviews.map(review => {
+    const reviewJSON = review.toJSON();
+    return reviewJSON;
+  })
+  res.json(resObj);
+});
+
+// 3-3 Create a Review for a Spot based on the Spot's id
+
+const validateCreateReviewBySpot = [
+  check('spotId').exists().isInt({ min: 1 }).withMessage("spotId need to be an integer and larger than 0"),
+  check('review').exists().withMessage("Review text is required").isLength({ min: 1, max: 500 }).withMessage("Review text length is between 1 to 500 characters"),
+  check('stars').exists().isInt({ min: 1, max: 5 }).withMessage("Stars must be an integer from 1 to 5"),
+  handleValidationErrors
+];
+
+router.post("/:spotId/reviews", validateCreateReviewBySpot, async (req, res, next) => {
+  // Handling un-authenticated situation
+  if (!req.user) {
+    res.status(401);
+    return res.json({ "message": "Authentication required" });
+  }
+  // Try to find the spot with spotId
+  const { spotId } = req.params;
+  const spot = await Spot.findOne({ where: { id: spotId } });
+  // Couldn't find a Spot with the specified id
+  if (!spot) {
+    res.status(404);
+    return res.json({ "message": "Spot couldn't be found" })
+  }
+  // Check if the user has already made a review on this spot
+  const prevReview = await Review.findOne({
+    where: { spotId: spotId, userId: req.user.id }
+  })
+  // If found, return status 500
+  if (prevReview) {
+    res.status(500);
+    return res.json({ "message": "User already has a review for this spot" });
+  }
+  // If not, create the new review
+  const { review, stars } = req.body;
+  const newReview = await Review.create({
+    spotId: spotId,
+    userId: req.user.id,
+    review: review,
+    stars: stars
+  })
+  // response status 201
+  res.status(201);
+  res.json(newReview);
 });
 
 module.exports = router;
