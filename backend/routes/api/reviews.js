@@ -17,13 +17,24 @@ router.get("/current", async (req, res, next) => {
   const reviews = await Review.findAll({
     where: { userId: req.user.id },
     include: [
-      { model: User, attributes: ['id', 'firstName', 'lastName'] },
+      {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName']
+      },
       {
         model: Spot,
         attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'],
-        include: { model: SpotImage, attributes: ['url'], where: { preview: true }, required: false, },
+        include: {
+          model: SpotImage,
+          attributes: ['url'],
+          where: { preview: true },
+          required: false,
+        },
       },
-      { model: ReviewImage, attributes: ['id', 'url'] }
+      {
+        model: ReviewImage,
+        attributes: ['id', 'url']
+      }
     ]
   })
   const resObj = {};
@@ -91,8 +102,12 @@ router.post("/:reviewId/images", validateAddImageToReview, async (req, res, next
 
 const validateEditReview = [
   check('reviewId').exists().isInt({ min: 1 }).withMessage("reviewId need to be an integer and larger than 0"),
-  check('review').exists().withMessage("Review text is required").isLength({ min: 1, max: 500 }).withMessage("Review text length is between 1 to 500 characters"),
-  check('stars').exists().isInt({ min: 1, max: 5 }).withMessage("Stars must be an integer from 1 to 5"),
+  check('review')
+    .exists().withMessage("Review text is required")
+    .isLength({ min: 1, max: 500 }).withMessage("Review text length is between 1 to 500 characters"),
+  check('stars')
+    .exists().withMessage("Stars is required")
+    .isInt({ min: 1, max: 5 }).withMessage("Stars must be an integer from 1 to 5"),
   handleValidationErrors
 ];
 
