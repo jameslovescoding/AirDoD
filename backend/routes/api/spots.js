@@ -51,7 +51,7 @@ router.get('/current', async (req, res, next) => {
   const spots = await Spot.findAll({
     where: { ownerId: id },
     include: [
-      { model: SpotImage, attributes: [['url', 'previewImage']], where: { preview: true }, required: false },
+      { model: SpotImage, attributes: ['url'], where: { preview: true }, required: false },
       { model: Review, attributes: ['stars'] }
     ]
   });
@@ -60,6 +60,7 @@ router.get('/current', async (req, res, next) => {
     const spotJSON = spot.toJSON();
     // extract aggregate key
     const { Reviews, SpotImages } = spotJSON;
+    console.log(SpotImages)
     // calculate average rating
     if (Reviews.length) {
       spotJSON.avgRating = Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length;
@@ -82,7 +83,9 @@ router.get('/current', async (req, res, next) => {
 // 2-3 Get details of a Spot from an id
 
 const validateGetSpotDetail = [
-  check('spotId').exists().isInt({ min: 1 }).withMessage("spotId need to be an integer and larger than 0"),
+  check('spotId')
+    .exists({ checkFalsy: true }).withMessage("spotId is required")
+    .isInt({ min: 1 }).withMessage("spotId need to be an integer and larger than 0"),
   handleValidationErrors
 ];
 
@@ -111,15 +114,27 @@ router.get("/:spotId", validateGetSpotDetail, async (req, res, next) => {
 // 2-4 Create a Spot
 
 const validateCreateSpot = [
-  check('address').exists({ checkFalsy: true }).withMessage('Street address is required'),
-  check('city').exists({ checkFalsy: true }).withMessage('City is required'),
-  check('state').exists({ checkFalsy: true }).withMessage('State is required'),
-  check('country').exists({ checkFalsy: true }).withMessage('Country is required'),
-  check('lat').exists({ checkFalsy: true }).isFloat().withMessage('Latitude is not valid'), // did not use isLatLong()
-  check('lng').exists({ checkFalsy: true }).isFloat().withMessage('Longitude is not valid'), // did not use isLatLong()
-  check('name').exists({ checkFalsy: true }).isLength({ max: 50 }).withMessage('Name must be less than 50 characters'),
-  check('description').exists({ checkFalsy: true }).withMessage('Description is required'),
-  check('price').exists({ checkFalsy: true }).withMessage('Price per day is required').isNumeric().withMessage('Price need to be a number'),
+  check('address')
+    .exists({ checkFalsy: true }).notEmpty().withMessage('Street address is required'),
+  check('city')
+    .exists({ checkFalsy: true }).notEmpty().withMessage('City is required'),
+  check('state')
+    .exists({ checkFalsy: true }).notEmpty().withMessage('State is required'),
+  check('country')
+    .exists({ checkFalsy: true }).notEmpty().withMessage('Country is required'),
+  check('lat')
+    .exists({ checkFalsy: true }).isFloat().withMessage('Latitude is not valid'), // did not use isLatLong()
+  check('lng')
+    .exists({ checkFalsy: true }).isFloat().withMessage('Longitude is not valid'), // did not use isLatLong()
+  check('name')
+    .exists({ checkFalsy: true }).notEmpty().withMessage("Name is required")
+    .isLength({ max: 50 }).withMessage('Name must be less than 50 characters'),
+  check('description')
+    .exists({ checkFalsy: true }).notEmpty().withMessage('Description is required')
+    .isLength({ max: 500 }).withMessage("Description must be less than 500 characters"),
+  check('price')
+    .exists({ checkFalsy: true }).withMessage('Price per day is required')
+    .isNumeric().withMessage('Price need to be a number'),
   handleValidationErrors
 ];
 
@@ -132,13 +147,15 @@ router.post("/", validateCreateSpot, async (req, res, next) => {
   const { id: ownerId } = req.user;
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
   const newSpot = await Spot.create({ ownerId, address, city, state, country, lat, lng, name, description, price });
+  // use status code 201
+  res.status(201);
   res.json(newSpot.toJSON());
 });
 
 // 2-5 Add an Image to a Spot based on the Spot's id
 
 const validateCreateSpotImage = [
-  check('url').exists().withMessage('url is required').isLength({ max: 500 }).withMessage('url max 500 long'),
+  check('url').exists().notEmpty().withMessage('url is required').isLength({ max: 500 }).withMessage('url max 500 long'),
   check('preview').exists().withMessage('preview is required').isBoolean().withMessage('preview need to be a boolean'),
   check('spotId').exists().isInt({ min: 1 }).withMessage("spotId need to be an integer and larger than 0"),
   handleValidationErrors
@@ -182,15 +199,21 @@ router.post("/:spotId/images", validateCreateSpotImage, async (req, res, next) =
 
 const validateEditSpot = [
   check('spotId').exists().isInt({ min: 1 }).withMessage("spotId need to be an integer and larger than 0"),
-  check('address').exists({ checkFalsy: true }).withMessage('Street address is required'),
-  check('city').exists({ checkFalsy: true }).withMessage('City is required'),
-  check('state').exists({ checkFalsy: true }).withMessage('State is required'),
-  check('country').exists({ checkFalsy: true }).withMessage('Country is required'),
+  check('address').exists({ checkFalsy: true }).notEmpty().withMessage('Street address is required'),
+  check('city').exists({ checkFalsy: true }).notEmpty().withMessage('City is required'),
+  check('state').exists({ checkFalsy: true }).notEmpty().withMessage('State is required'),
+  check('country').exists({ checkFalsy: true }).notEmpty().withMessage('Country is required'),
   check('lat').exists({ checkFalsy: true }).isFloat().withMessage('Latitude is not valid'), // did not use isLatLong()
   check('lng').exists({ checkFalsy: true }).isFloat().withMessage('Longitude is not valid'), // did not use isLatLong()
-  check('name').exists({ checkFalsy: true }).isLength({ max: 50 }).withMessage('Name must be less than 50 characters'),
-  check('description').exists({ checkFalsy: true }).withMessage('Description is required'),
-  check('price').exists({ checkFalsy: true }).withMessage('Price per day is required').isNumeric().withMessage('Price need to be a number'),
+  check('name')
+    .exists({ checkFalsy: true }).notEmpty().withMessage("Name is required")
+    .isLength({ max: 50 }).withMessage('Name must be less than 50 characters'),
+  check('description')
+    .exists({ checkFalsy: true }).notEmpty().withMessage('Description is required')
+    .isLength({ max: 500 }).withMessage("Description must be less than 500 characters"),
+  check('price')
+    .exists({ checkFalsy: true }).withMessage('Price per day is required')
+    .isNumeric().withMessage('Price need to be a number'),
   handleValidationErrors
 ];
 
@@ -295,7 +318,9 @@ router.get("/:spotId/reviews", validateGetReviewBySpot, async (req, res, next) =
 
 const validateCreateReviewBySpot = [
   check('spotId').exists().isInt({ min: 1 }).withMessage("spotId need to be an integer and larger than 0"),
-  check('review').exists().withMessage("Review text is required").isLength({ min: 1, max: 500 }).withMessage("Review text length is between 1 to 500 characters"),
+  check('review')
+    .exists().withMessage("Review text is required")
+    .isLength({ min: 1, max: 500 }).withMessage("Review text length is between 1 to 500 characters"),
   check('stars').exists().isInt({ min: 1, max: 5 }).withMessage("Stars must be an integer from 1 to 5"),
   handleValidationErrors
 ];
@@ -326,7 +351,7 @@ router.post("/:spotId/reviews", validateCreateReviewBySpot, async (req, res, nex
   // If not, create the new review
   const { review, stars } = req.body;
   const newReview = await Review.create({
-    spotId: spotId,
+    spotId: spot.id,
     userId: req.user.id,
     review: review,
     stars: stars
