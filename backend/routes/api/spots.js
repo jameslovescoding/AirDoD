@@ -1,14 +1,54 @@
 const express = require('express');
+const { Op } = require('sequelize');
 const { User, Spot, SpotImage, Review, ReviewImage, Booking } = require('../../db/models');
-const { check } = require('express-validator');
+const { check, query } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
 // 2-1 Get all Spots
 
-router.get('/', async (req, res, next) => {
+const validateGetSpot = [
+  query('page', "Page must be greater than or equal to 1").default(1).isInt({ min: 1, max: 10 }).toInt(),
+  query('size', "Size must be greater than or equal to 1").default(20).isInt({ min: 1, max: 20 }).toInt(),
+  query('minLat', "Minimum latitude is invalid").isDecimal().toFloat().optional(),
+  query('maxLat', "Maximum latitude is invalid").isDecimal().toFloat().optional(),
+  query('minLng', "Minimum longitude is invalid").isDecimal().toFloat().optional(),
+  query('maxLng', "Maximum longitude is invalid").isDecimal().toFloat().optional(),
+  query('minPrice', "Minimum price must be greater than or equal to 0").isFloat({ min: 0 }).toFloat().optional(),
+  query('maxPrice', "Maximum price must be greater than or equal to 0").isFloat({ min: 0 }).toFloat().optional(),
+  handleValidationErrors
+];
+
+router.get('/', validateGetSpot, async (req, res, next) => {
+  //console.log(req.query);
+  const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+  // Handling pagination
+  const pagination = {};
+  pagination.limit = size;
+  if (page > 1) {
+    pagination.offset = size * (page - 1);
+  }
+  //console.log(pagination);
+  // Handling search filter on lat, lng, price
+  const where = {};
+  // lat
+  if (minLat || maxLat) { where.lat = {}; }
+  if (minLat) { where.lat = { ...where.lat, [Op.gte]: minLat }; }
+  if (maxLat) { where.lat = { ...where.lat, [Op.lte]: maxLat }; }
+  // lng
+  if (minLng || maxLng) { where.lng = {}; }
+  if (minLng) { where.lng = { ...where.lng, [Op.gte]: minLng }; }
+  if (maxLng) { where.lng = { ...where.lng, [Op.lte]: maxLng }; }
+  // price
+  if (minPrice || maxPrice) { where.price = {}; }
+  if (minPrice) { where.price = { ...where.price, [Op.gte]: minPrice } }
+  if (maxPrice) { where.price = { ...where.price, [Op.lte]: maxPrice } }
+  //console.log(where);
+  // The main query
   const spots = await Spot.findAll({
+    where: where,
+    ...pagination,
     include: [
       { model: SpotImage, attributes: ['url'], where: { preview: true }, required: false },
       { model: Review, attributes: ['stars'] }
@@ -60,7 +100,7 @@ router.get('/current', async (req, res, next) => {
     const spotJSON = spot.toJSON();
     // extract aggregate key
     const { Reviews, SpotImages } = spotJSON;
-    console.log(SpotImages)
+    //console.log(SpotImages)
     // calculate average rating
     if (Reviews.length) {
       spotJSON.avgRating = Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length;
