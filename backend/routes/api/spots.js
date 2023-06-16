@@ -55,6 +55,8 @@ router.get('/', validateGetSpot, async (req, res, next) => {
     ]
   });
   const resObj = {};
+  resObj.page = page;
+  resObj.size = size;
   resObj.Spots = spots.map(spot => {
     // convert to JSON object
     const spotJSON = spot.toJSON();
