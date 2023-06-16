@@ -1,37 +1,56 @@
 // backend/routes/api/index.js
-
 const router = require('express').Router();
+
 const sessionRouter = require('./session.js');
+
 const usersRouter = require('./users.js');
+
 const spotsRouter = require('./spots.js');
+
 const reviewsRouter = require('./reviews.js');
+
+const bookingsRouter = require('./bookings.js');
+
+const spotImageRouter = require('./spot-images.js');
+
+const reviewImageRouter = require('./review-images.js');
+
 const { restoreUser } = require('../../utils/auth.js');
 
 // parse and verify the token
 // if everything is fine, user is stored in req.user
-// with attributes: email, createdAt, updatedAt
 
 router.use(restoreUser);
 
-// Login: POST / api / session
-// Logout: DELETE / api / session
-// Get session user: GET / api / session
+// Login, logout, Get the current user
 
 router.use('/session', sessionRouter);
 
-// Signup: POST /api/users
+// Signup
 
 router.use('/users', usersRouter);
 
-// Spots: /api/spots
+// Spots
 
 router.use('/spots', spotsRouter);
 
-// Reviews: /api/reviews
+// Reviews
 
 router.use('/reviews', reviewsRouter);
 
-// Test: POST /api/test
+// Bookings
+
+router.use('/bookings', bookingsRouter);
+
+// Spot Images
+
+router.use('/spot-images', spotImageRouter);
+
+// Review Images
+
+router.use('/review-images', reviewImageRouter);
+
+// Test
 
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });
