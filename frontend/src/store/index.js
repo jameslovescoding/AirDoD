@@ -1,10 +1,15 @@
 // frontend/src/store/index.js
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { combineReducers, applyMiddleware, compose } from 'redux';
+import { legacy_createStore as createStore } from 'redux';
 import thunk from 'redux-thunk';
+
+// import reducers
+import sessionReducer from './session';
 
 // frontend/src/store/index.js
 // ...
 const rootReducer = combineReducers({
+  session: sessionReducer,
 });
 
 // frontend/src/store/index.js
