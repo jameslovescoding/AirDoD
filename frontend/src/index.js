@@ -1,21 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+
 import './index.css';
+
+// React components
+
+import ReactDOM from 'react-dom';
 import App from './App';
-
-// import Provider from react-redux
 import { Provider } from 'react-redux';
-
-// BrowserRouter
 import { BrowserRouter } from 'react-router-dom';
+import { ModalProvider, Modal } from './context/Modal';
 
-// import the config store from redux folder
+// Redux store, session and csrfFetch
+
 import configureStore from './store';
-
-// custom fetch wrapped with XSRF-TOKEN
-// restore XSRF-TOKEN function for developement mode
 import { restoreCSRF, csrfFetch } from './store/csrf';
-
 import * as sessionActions from './store/session';
 
 // create the redux store
@@ -31,15 +29,18 @@ if (process.env.NODE_ENV !== 'production') {
   window.sessionActions = sessionActions;
 }
 
-// pass the created redux store to the provider
-// and wrap the app with it
+// Modal Provider, provide context for the Modal
+// Provider is for redux
 function Root() {
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <ModalProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+          <Modal />
+        </BrowserRouter>
+      </Provider>
+    </ModalProvider>
   );
 }
 
