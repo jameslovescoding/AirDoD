@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import './Navigation.css';
-import OpenModalButton from '../OpenModalButton';
+import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 
@@ -11,7 +11,6 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-
 
   const openMenu = () => {
     // if showMenu is true, nothing happens
@@ -38,11 +37,13 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
+  const closeMenu = () => setShowMenu(false);
 
   // handleLogout
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    closeMenu();
   };
 
   // use .hidden class and display: none in css to hide the ul
@@ -66,14 +67,16 @@ function ProfileButton({ user }) {
         ) : (
           <>
             <li>
-              <OpenModalButton
-                buttonText="Log In"
+              <OpenModalMenuItem
+                itemText="Log In"
+                onItemClick={closeMenu}
                 modalComponent={<LoginFormModal />}
               />
             </li>
             <li>
-              <OpenModalButton
-                buttonText="Sign Up"
+              <OpenModalMenuItem
+                itemText="Sign Up"
+                onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
             </li>
