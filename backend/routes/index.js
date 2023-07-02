@@ -4,33 +4,11 @@ const express = require('express');
 const router = express.Router();
 const apiRouter = require('./api');
 
-
-// // Not for production
-// router.get("/api/csrf/restore", (req, res) => {
-//   const csrfToken = req.csrfToken();
-//   res.cookie("XSRF-TOKEN", csrfToken);
-//   res.status(200).json({
-//     'XSRF-Token': csrfToken
-//   });
-// });
-
-// Add a XSRF-TOKEN cookie in development
-if (process.env.NODE_ENV !== 'production') {
-  router.get('/api/csrf/restore', (req, res) => {
-    const csrfToken = req.csrfToken();
-    res.cookie('XSRF-TOKEN', csrfToken);
-    return res.json({ 'XSRF-Token': csrfToken });
-  });
-}
-
-
+// serving backend API endpoint
 router.use('/api', apiRouter);
 
-// backend/routes/index.js
-// ... after `router.use('/api', apiRouter);`
-
 // Static routes
-// Serve React build files in production
+// serving frontend React build files in production
 if (process.env.NODE_ENV === 'production') {
   const path = require('path');
   // Serve the frontend's index.html file at the root route
@@ -53,6 +31,14 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// ...
+// Add a XSRF-TOKEN cookie in development
+if (process.env.NODE_ENV !== 'production') {
+  // GET /api/csrf/restore to retrieve the XSRF-TOKEN
+  router.get('/api/csrf/restore', (req, res) => {
+    const csrfToken = req.csrfToken();
+    res.cookie('XSRF-TOKEN', csrfToken);
+    return res.json({ 'XSRF-Token': csrfToken });
+  });
+}
 
 module.exports = router;
