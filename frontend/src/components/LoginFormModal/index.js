@@ -14,13 +14,12 @@ const LoginFormModal = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
+
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
+        setErrors(data.errors);
       });
   }
 
@@ -45,7 +44,9 @@ const LoginFormModal = () => {
           required
         />
       </label>
+      {errors.invalidCredentials && <p>{errors.invalidCredentials}</p>}
       {errors.credential && <p>{errors.credential}</p>}
+      {errors.password && <p>{errors.password}</p>}
       <button type="submit">Log In</button>
     </form>
   </>)
