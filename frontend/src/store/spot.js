@@ -168,17 +168,17 @@ const spotReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_ALL_SPOTS: {
       const newState = { ...state };
-      const spots = {};
+      const allSpots = {};
       action.payload.forEach(spot => {
-        spots[spot.id] = { ...spot };
+        allSpots[spot.id] = { ...spot };
       })
-      newState.spots = spots;
+      newState.allSpots = allSpots;
       return newState;
     }
     case REMOVE_ALL_SPOTS: {
       const newState = { ...state };
-      const spots = {};
-      newState.spots = spots;
+      const allSpots = {};
+      newState.allSpots = allSpots;
       return newState;
     }
     case SET_SINGLE_SPOT: {
