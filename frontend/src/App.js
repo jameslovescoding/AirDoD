@@ -33,10 +33,10 @@ function App() {
         <Route path="/spots/current">
           <ManageSpotsPage />
         </Route>
-        <Route path="/spots/:id/edit">
+        <Route path="/spots/:spotId/edit">
           <EditSpotForm />
         </Route>
-        <Route path="/spots/:id">
+        <Route path="/spots/:spotId">
           <SpotShow />
         </Route>
         <Route path="/reviews/current">

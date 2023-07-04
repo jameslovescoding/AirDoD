@@ -5,6 +5,7 @@ import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
+
   const sessionUser = useSelector(state => state.session.user);
 
   return (
@@ -12,10 +13,14 @@ function Navigation({ isLoaded }) {
       <li>
         <NavLink exact to="/">Home</NavLink>
       </li>
+
       {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
+        <>
+          {sessionUser && <NavLink to="/spots/new">Create a New Spot</NavLink>}
+          <li>
+            <ProfileButton user={sessionUser} />
+          </li>
+        </>
       )}
     </ul>
   );

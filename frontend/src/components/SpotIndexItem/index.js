@@ -9,21 +9,34 @@ const SpotIndexItem = ({ spot }) => {
 
   const handleClickOnTile = (e) => {
     console.log(spot.id);
-    //history.push()
+    const url = `/spots/${spot.id}`;
+    history.push(url);
   };
 
   return (<>
-    <h4>SpotIndexItem</h4>
-    <div onClick={handleClickOnTile}>
-      <img src={`${spot.previewImage}`} />
-      <div>
+    <div
+      onClick={handleClickOnTile}
+      className='spot-index-item-tile'
+    >
+      <img
+        src={`${spot.previewImage}`}
+        className='spot-index-item-tile-preview-img'
+        alt={`preview img for number ${spot.id} spot`}
+      />
+      <div className='spot-index-item-tile-location-and-rating'>
         <p>{spot.city}, {spot.state}</p>
-        <p>{spot.avgRating}</p>
+        <p>
+          <span>
+            <i class="fa-solid fa-star"></i>
+          </span> {spot.avgRating || "not available"}
+        </p>
       </div>
-      <p>${spot.price} per night</p>
+      <p>
+        <span className='spot-index-item-tile-price'>
+          ${spot.price}
+        </span> /night
+      </p>
     </div>
-
-
   </>)
 }
 

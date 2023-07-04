@@ -23,6 +23,14 @@ const LoginFormModal = () => {
       });
   }
 
+  const handleSubmitDemoUser = () => {
+    return dispatch(sessionActions.login({
+      "credential": "AliceLee123",
+      "password": "password1"
+    }))
+      .then(closeModal)
+  }
+
   return (<>
     <h1>Log In</h1>
     <form onSubmit={handleSubmit}>
@@ -49,6 +57,7 @@ const LoginFormModal = () => {
       {errors.password && <p>{errors.password}</p>}
       <button type="submit">Log In</button>
     </form>
+    <button onClick={handleSubmitDemoUser}>Demo User</button>
   </>)
 }
 
