@@ -1,6 +1,5 @@
 import { csrfFetch } from "./csrf";
 import Cookies from 'js-cookie';
-
 // constant for the reducer
 
 const SET_ALL_SPOTS = "spots/setAllSpots";
@@ -8,7 +7,7 @@ const REMOVE_ALL_SPOTS = "spots/removeAllSpots";
 const ADD_SPOT_IN_LIST = "spots/addSpotInList";
 const EDIT_SPOT_IN_LIST = "spots/editSpotInList";
 const REMOVE_SPOT_IN_LIST = "spots/removeSpotInList";
-
+const ADD_IMAGE_TO_SPOT = "spots/addImageToSpot";
 const SET_SINGLE_SPOT = "spots/setSingleSpot";
 const REMOVE_SINGLE_SPOT = "spots/removeSingleSpot";
 
@@ -21,41 +20,49 @@ const setAllSpots = (spots) => { // spots is an array
   }
 }
 
-const removeAllSpots = () => {
+const removeAllSpots = () => { // no argument needed
   return {
     type: REMOVE_ALL_SPOTS,
   }
 }
 
-const addSpotInList = (spot) => {
+export const addSpotInList = (spot) => { // add single spot to allSpots
   return {
     type: ADD_SPOT_IN_LIST,
     payload: spot,
   }
 }
 
-const editSpotInList = (spot) => {
+const editSpotInList = (spot) => { // edit single spot in allSpots
   return {
     type: EDIT_SPOT_IN_LIST,
     payload: spot,
   }
 }
 
-const removeSpotInList = (spotId) => {
+const removeSpotInList = (spotId) => { // remove single spot in allSpots
   return {
     type: REMOVE_SPOT_IN_LIST,
     id: spotId,
   }
 }
 
-const setSingleSpot = (spot) => {
+const addImageToSpot = (image, spotId) => { // add image to allSpots and singleSpot
   return {
-    type: SET_SINGLE_SPOT,
-    payload: spot
+    type: ADD_IMAGE_TO_SPOT,
+    payload: image,
+    id: spotId,
   }
 }
 
-const removeSingleSpot = () => {
+export const setSingleSpot = (spot) => { // set new value for singleSpot
+  return {
+    type: SET_SINGLE_SPOT,
+    payload: spot,
+  }
+}
+
+const removeSingleSpot = () => { // set null for singleSpot
   return {
     type: REMOVE_SINGLE_SPOT,
   }
@@ -85,8 +92,10 @@ export const getAllSpots = (filter) => async (dispatch) => {
   }
   //console.log("Get all spots url: ", url)
   const response = await csrfFetch(url);
-  const data = await response.json();
-  dispatch(setAllSpots(data.Spots));
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setAllSpots(data.Spots));
+  }
   return response;
 }
 
@@ -94,8 +103,10 @@ export const getAllSpots = (filter) => async (dispatch) => {
 export const getAllSpotsForCurrentUser = () => async (dispatch) => {
   const url = "/api/spots/current";
   const response = await csrfFetch(url);
-  const data = await response.json();
-  dispatch(setAllSpots(data.Spots));
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setAllSpots(data.Spots));
+  }
   return response;
 }
 
@@ -103,8 +114,11 @@ export const getAllSpotsForCurrentUser = () => async (dispatch) => {
 export const getSpotById = (spotId) => async (dispatch) => {
   const url = `/api/spots/${spotId}`;
   const response = await csrfFetch(url);
-  const data = await response.json();
-  dispatch(setSingleSpot(data));
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setSingleSpot(data));
+    return data;
+  }
   return response;
 }
 
@@ -120,11 +134,22 @@ export const createNewSpot = (spot) => async (dispatch) => {
     body: JSON.stringify(spot),
   };
   const response = await csrfFetch(url, options);
-  const data = await response.json();
-  // set the singleSpot
-  dispatch(setSingleSpot(data));
-  // add spot to spots
-  dispatch(addSpotInList(data));
+  return response;
+}
+
+// 2-5: Create and return a new image for a spot specified by id, POST /api/spots/:spotId/images
+
+export const addImageToSpotById = (spotId, image) => async (dispatch) => {
+  const url = `/api/spots/${spotId}/images`;
+  const options = {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+      'XSRF-Token': 'XSRF-TOKEN',
+    },
+    body: JSON.stringify(image),
+  }
+  const response = await csrfFetch(url, options);
   return response;
 }
 
@@ -140,11 +165,13 @@ export const editSpotById = (spotId, spot) => async (dispatch) => {
     body: JSON.stringify(spot),
   };
   const response = await csrfFetch(url, options);
-  const data = await response.json();
-  // set the singleSpot
-  dispatch(setSingleSpot(data));
-  // update spot in the spots
-  dispatch(editSpotInList(data));
+  if (response.ok) {
+    const data = await response.json();
+    // set the singleSpot
+    dispatch(setSingleSpot(data));
+    // update spot in the spots
+    dispatch(editSpotInList(data));
+  }
   return response;
 }
 
@@ -152,8 +179,9 @@ export const editSpotById = (spotId, spot) => async (dispatch) => {
 export const deleteSpotById = (spotId) => async (dispatch) => {
   const url = `/api/spots/${spotId}`;
   const response = await csrfFetch(url);
-  //const data = await response.json();
-  dispatch(removeSpotInList(spotId));
+  if (response.ok) {
+    dispatch(removeSpotInList(spotId));
+  }
   return response;
 }
 
@@ -179,6 +207,11 @@ const spotReducer = (state = initialState, action) => {
       const newState = { ...state };
       const allSpots = {};
       newState.allSpots = allSpots;
+      return newState;
+    }
+    case ADD_IMAGE_TO_SPOT: {
+      const newState = { ...state };
+      const { payload, id } = action;
       return newState;
     }
     case SET_SINGLE_SPOT: {

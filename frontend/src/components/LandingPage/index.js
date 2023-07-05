@@ -5,18 +5,21 @@ import { useDispatch, useSelector } from "react-redux";
 import SpotsIndex from '../SpotsIndex';
 
 const LandingPage = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const spots = useSelector(state => Object.values(state.spots.allSpots));
 
   useEffect(() => {
     dispatch(getAllSpots())
-      .then(setIsLoaded(true));
   }, [dispatch]);
 
+  if (!Object.keys(spots).length) {
+    return (<>
+      <h2>Loading spot</h2>
+    </>)
+  }
+
   return (<>
-    <h2>LandingPage</h2>
-    {isLoaded && <SpotsIndex spots={spots} />}
+    <SpotsIndex spots={spots} />
   </>)
 }
 

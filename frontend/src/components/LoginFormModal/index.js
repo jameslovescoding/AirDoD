@@ -11,24 +11,30 @@ const LoginFormModal = () => {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
 
-    return dispatch(sessionActions.login({ credential, password }))
-      .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        setErrors(data.errors);
-      });
+    const response = await dispatch(sessionActions.login({ credential, password }))
+    if (response.ok) {
+      closeModal();
+    } else {
+      const data = await response.json();
+      setErrors(data.errors);
+    }
   }
 
-  const handleSubmitDemoUser = () => {
-    return dispatch(sessionActions.login({
+  const handleSubmitDemoUser = async () => {
+    const response = await dispatch(sessionActions.login({
       "credential": "AliceLee123",
       "password": "password1"
-    }))
-      .then(closeModal)
+    }));
+    if (response.ok) {
+      closeModal();
+    } else {
+      const data = await response.json();
+      setErrors(data.errors);
+    }
   }
 
   return (<>

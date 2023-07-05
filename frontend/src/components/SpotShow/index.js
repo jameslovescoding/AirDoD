@@ -11,19 +11,23 @@ const SpotShow = () => {
   const currentSpot = useSelector(state => state.spots.singleSpot);
 
   useEffect(() => {
-    dispatch(getSpotById(spotId))
-      .then(setIsLoaded(true));
+    dispatch(getSpotById(spotId)).then(() => setIsLoaded(true))
   }, [dispatch]);
 
   const handleReserveButtonPress = (e) => {
     alert("Feature Coming Soon...")
   }
-  return (isLoaded && <>
+
+  if (!isLoaded) {
+    return (<>
+    </>)
+  }
+  return (<>
     <h2>{currentSpot.name}</h2>
     <p>{currentSpot.city}, {currentSpot.state}, {currentSpot.country}</p>
     <div>
       {currentSpot.SpotImages.map(imgObj => {
-        return (<img src={imgObj.url} />)
+        return (<img src={imgObj.url} alt={imgObj.url} />)
       })}
     </div>
     <div>
@@ -35,7 +39,7 @@ const SpotShow = () => {
         <div>
           <div>
             <p><span>${currentSpot.price}</span> night</p>
-            <p><span><i class="fa-solid fa-star"></i></span> {currentSpot.avgStarRating || "no rating available"}</p>
+            <p><span><i class="fa-solid fa-star"></i></span> {currentSpot.avgStarRating || "New"}</p>
             <p>{currentSpot.numReviews} reviews</p>
           </div>
           <button onClick={handleReserveButtonPress}>Reserve</button>
@@ -43,9 +47,38 @@ const SpotShow = () => {
       </div>
     </div >
     <div>
-
     </div>
   </>)
+
+
 }
 
 export default SpotShow;
+
+/*
+ <h2>{currentSpot.name}</h2>
+      <p>{currentSpot.city}, {currentSpot.state}, {currentSpot.country}</p>
+      <div>
+        {currentSpot.SpotImages.map(imgObj => {
+          return (<img src={imgObj.url} alt={imgObj.url} />)
+        })}
+      </div>
+      <div>
+        <div>
+          <h3>Hosted by {currentSpot.Owner.firstName} {currentSpot.Owner.lastName}</h3>
+          <p>{currentSpot.description}</p>
+        </div>
+        <div>
+          <div>
+            <div>
+              <p><span>${currentSpot.price}</span> night</p>
+              <p><span><i class="fa-solid fa-star"></i></span> {currentSpot.avgStarRating || "New"}</p>
+              <p>{currentSpot.numReviews} reviews</p>
+            </div>
+            <button onClick={handleReserveButtonPress}>Reserve</button>
+          </div>
+        </div>
+      </div >
+      <div>
+      </div>
+ */

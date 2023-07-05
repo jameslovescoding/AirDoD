@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { getAllSpots } from "../../store/spot";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const EditSpotForm = () => {
   return (<>

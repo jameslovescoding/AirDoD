@@ -18,23 +18,50 @@ function SignupFormModal() {
   const { closeModal } = useModal();
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors({});
-      return dispatch(sessionActions.signup({ email, username, firstName, lastName, password, }))
-        .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) {
-            setErrors(data.errors);
-          }
-        });
+      const response = await dispatch(sessionActions.signup({ email, username, firstName, lastName, password, }))
+      if (response.ok) {
+        closeModal();
+      } else {
+        const data = await response.json();
+        setErrors(data.errors);
+      }
+    } else {
+      setErrors({
+        confirmPassword: "Confirm Password field must be the same as the Password field"
+      });
     }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
   };
+
+  const enterDemoUserInfo = () => {
+    setEmail("jack@gmail.com");
+    setUsername("jackAlwaysWin");
+    setFirstName("Jack");
+    setLastName("Smith");
+    setPassword("123ggg");
+    setConfirmPassword("123ggg");
+  };
+
+  const enterDemoErrorsInfo = () => {
+    setEmail("jack@gmail.com");
+    setUsername("jackAlwaysWin");
+    setFirstName("Jack");
+    setLastName("Smith");
+    setPassword("123ggg");
+    setConfirmPassword("123ggg");
+  };
+
+  const clearDemoInput = () => {
+    setEmail("");
+    setUsername("");
+    setFirstName("");
+    setLastName("");
+    setPassword("");
+    setConfirmPassword("");
+  }
 
   return (
     <>
@@ -102,6 +129,9 @@ function SignupFormModal() {
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
+      <button onClick={enterDemoUserInfo}>Demo User</button>
+      <button onClick={enterDemoErrorsInfo}>Demo Errors</button>
+      <button onClick={clearDemoInput}>Clear Demo</button>
     </>
   );
 }
