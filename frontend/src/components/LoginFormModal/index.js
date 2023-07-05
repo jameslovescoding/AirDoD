@@ -1,11 +1,13 @@
 import { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 import "./LoginForm.css";
 
 const LoginFormModal = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
@@ -18,6 +20,7 @@ const LoginFormModal = () => {
     const response = await dispatch(sessionActions.login({ credential, password }))
     if (response.ok) {
       closeModal();
+      history.push("/");
     } else {
       const data = await response.json();
       setErrors(data.errors);
@@ -28,6 +31,19 @@ const LoginFormModal = () => {
     const response = await dispatch(sessionActions.login({
       "credential": "AliceLee123",
       "password": "password1"
+    }));
+    if (response.ok) {
+      closeModal();
+    } else {
+      const data = await response.json();
+      setErrors(data.errors);
+    }
+  }
+
+  const handleSubmitDemoUser2 = async () => {
+    const response = await dispatch(sessionActions.login({
+      "credential": "BobSmith877",
+      "password": "password2"
     }));
     if (response.ok) {
       closeModal();
@@ -63,7 +79,8 @@ const LoginFormModal = () => {
       {errors.password && <p>{errors.password}</p>}
       <button type="submit">Log In</button>
     </form>
-    <button onClick={handleSubmitDemoUser}>Demo User</button>
+    <button onClick={handleSubmitDemoUser}>Demo User Alice</button>
+    <button onClick={handleSubmitDemoUser2}>Demo User Bob</button>
   </>)
 }
 

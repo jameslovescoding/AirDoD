@@ -26,36 +26,7 @@ const removeAllSpots = () => { // no argument needed
   }
 }
 
-export const addSpotInList = (spot) => { // add single spot to allSpots
-  return {
-    type: ADD_SPOT_IN_LIST,
-    payload: spot,
-  }
-}
-
-const editSpotInList = (spot) => { // edit single spot in allSpots
-  return {
-    type: EDIT_SPOT_IN_LIST,
-    payload: spot,
-  }
-}
-
-const removeSpotInList = (spotId) => { // remove single spot in allSpots
-  return {
-    type: REMOVE_SPOT_IN_LIST,
-    id: spotId,
-  }
-}
-
-const addImageToSpot = (image, spotId) => { // add image to allSpots and singleSpot
-  return {
-    type: ADD_IMAGE_TO_SPOT,
-    payload: image,
-    id: spotId,
-  }
-}
-
-export const setSingleSpot = (spot) => { // set new value for singleSpot
+const setSingleSpot = (spot) => { // set new value for singleSpot
   return {
     type: SET_SINGLE_SPOT,
     payload: spot,
@@ -117,7 +88,6 @@ export const getSpotById = (spotId) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(setSingleSpot(data));
-    return data;
   }
   return response;
 }
@@ -165,23 +135,16 @@ export const editSpotById = (spotId, spot) => async (dispatch) => {
     body: JSON.stringify(spot),
   };
   const response = await csrfFetch(url, options);
-  if (response.ok) {
-    const data = await response.json();
-    // set the singleSpot
-    dispatch(setSingleSpot(data));
-    // update spot in the spots
-    dispatch(editSpotInList(data));
-  }
   return response;
 }
 
 // 2-7: delete a existing spot, DELETE /api/spots/:spotId
 export const deleteSpotById = (spotId) => async (dispatch) => {
   const url = `/api/spots/${spotId}`;
-  const response = await csrfFetch(url);
-  if (response.ok) {
-    dispatch(removeSpotInList(spotId));
-  }
+  const options = {
+    method: "DELETE",
+  };
+  const response = await csrfFetch(url, options);
   return response;
 }
 

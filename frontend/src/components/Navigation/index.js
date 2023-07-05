@@ -13,7 +13,6 @@ function Navigation({ isLoaded }) {
       <li>
         <NavLink exact to="/">Home</NavLink>
       </li>
-
       {isLoaded && (
         <>
           {sessionUser && <NavLink to="/spots/new">Create a New Spot</NavLink>}

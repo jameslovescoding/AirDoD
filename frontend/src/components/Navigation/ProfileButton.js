@@ -1,6 +1,7 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 import './Navigation.css';
 import OpenModalMenuItem from './OpenModalMenuItem';
@@ -9,6 +10,7 @@ import SignupFormModal from '../SignupFormModal';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -43,8 +45,15 @@ function ProfileButton({ user }) {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    history.push(`/`);
     closeMenu();
   };
+
+  const handleManageSpots = (e) => {
+    e.preventDefault();
+    history.push(`/spots/current`);
+    closeMenu();
+  }
 
   // use .hidden class and display: none in css to hide the ul
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -57,9 +66,11 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
+            <li>Hello, {user.firstName}-{user.lastName}</li>
             <li>{user.email}</li>
+            <li>
+              <button onClick={handleManageSpots}>Manage Spots</button>
+            </li>
             <li>
               <button onClick={handleLogout}>Log Out</button>
             </li>

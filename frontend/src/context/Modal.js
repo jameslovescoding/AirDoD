@@ -16,8 +16,8 @@ export function ModalProvider({ children }) {
     // If callback function is truthy, call the callback function and reset it
     // to null:
     if (typeof onModalClose === "function") {
-      setOnModalClose(null);
       onModalClose();
+      setOnModalClose(null);
     }
   };
 

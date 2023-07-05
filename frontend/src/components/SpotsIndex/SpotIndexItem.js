@@ -1,8 +1,5 @@
 import React from 'react';
-import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { getAllSpots } from "../../store/spot";
-import { useDispatch } from "react-redux";
 
 const SpotIndexItem = ({ spot }) => {
   const history = useHistory();

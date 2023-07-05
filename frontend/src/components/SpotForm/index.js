@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from "react";
-import { createNewSpot, addSpotInList, setSingleSpot, addImageToSpotById } from "../../store/spot";
+import { createNewSpot, editSpotById, addImageToSpotById } from "../../store/spot";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ const SpotForm = ({ spot, formType }) => {
   const [imgURL2, setImgURL2] = useState("");
   const [imgURL3, setImgURL3] = useState("");
   const [imgURL4, setImgURL4] = useState("");
-  const currentSpot = useSelector(state => state.spots.singleSpot);
+  const buttonText = formType === "create" ? "Create spot" : "Update spot";
 
   const enterDemoSpotInfo1 = () => {
     setCountry("United States of America");
@@ -58,6 +58,7 @@ const SpotForm = ({ spot, formType }) => {
     e.preventDefault();
     console.log("form submit triggered")
     if (validateForm()) {
+      // passed the validation
       console.log("Good to go!")
       const newSpot = {
         country,
@@ -70,19 +71,29 @@ const SpotForm = ({ spot, formType }) => {
         description,
         price
       }
-      const response = await dispatch(createNewSpot(newSpot))
-      if (response.ok) {
-        const data = await response.json();
-        const spotId = data.id;
-        // add images
-        if (imgURLPreview.length > 0) await dispatch(addImageToSpotById(spotId, { url: imgURLPreview, preview: true }))
-        if (imgURL1.length > 0) await dispatch(addImageToSpotById(spotId, { url: imgURL1, preview: false }))
-        if (imgURL2.length > 0) await dispatch(addImageToSpotById(spotId, { url: imgURL2, preview: false }))
-        if (imgURL3.length > 0) await dispatch(addImageToSpotById(spotId, { url: imgURL3, preview: false }))
-        if (imgURL4.length > 0) await dispatch(addImageToSpotById(spotId, { url: imgURL4, preview: false }))
-        history.push(`/spots/${spotId}`);
+      if (formType === "create") {
+        // create the spot
+        const response = await dispatch(createNewSpot(newSpot))
+        if (response.ok) {
+          const data = await response.json();
+          const spotId = data.id;
+          // add images
+          if (imgURLPreview.length > 0) await dispatch(addImageToSpotById(spotId, { url: imgURLPreview, preview: true }))
+          if (imgURL1.length > 0) await dispatch(addImageToSpotById(spotId, { url: imgURL1, preview: false }))
+          if (imgURL2.length > 0) await dispatch(addImageToSpotById(spotId, { url: imgURL2, preview: false }))
+          if (imgURL3.length > 0) await dispatch(addImageToSpotById(spotId, { url: imgURL3, preview: false }))
+          if (imgURL4.length > 0) await dispatch(addImageToSpotById(spotId, { url: imgURL4, preview: false }))
+          history.push(`/spots/${spotId}`);
+        }
+      } else {
+        // update the spot
+        const response = await dispatch(editSpotById(spot.id, newSpot));
+        if (response.ok) {
+          history.push(`/spots/${spot.id}`);
+        }
       }
     } else {
+      // did not pass the validation
       console.log("Fix issues")
     }
   }
@@ -96,12 +107,14 @@ const SpotForm = ({ spot, formType }) => {
     if (description.length < 30) newErrors.description = "Description needs a minimum of 30 characters";
     if (!name.length) newErrors.name = "Name is required";
     if (!price) newErrors.price = "Price is required";
-    if (!imgURLPreview.length) newErrors.imgURLPreview = "Preview image is required";
-    if (imgURLPreview.length > 0 && !validateImg(imgURLPreview)) newErrors.imgURLPreview = "Image URL must end in .png, .jpg, .jpeg";
-    if (imgURL1.length > 0 && !validateImg(imgURL1)) newErrors.imgURL1 = "Image URL must end in .png, .jpg, .jpeg";
-    if (imgURL2.length > 0 && !validateImg(imgURL2)) newErrors.imgURL2 = "Image URL must end in .png, .jpg, .jpeg";
-    if (imgURL3.length > 0 && !validateImg(imgURL3)) newErrors.imgURL3 = "Image URL must end in .png, .jpg, .jpeg";
-    if (imgURL4.length > 0 && !validateImg(imgURL4)) newErrors.imgURL4 = "Image URL must end in .png, .jpg, .jpeg";
+    if (formType === "create") {
+      if (!imgURLPreview.length) newErrors.imgURLPreview = "Preview image is required";
+      if (imgURLPreview.length > 0 && !validateImg(imgURLPreview)) newErrors.imgURLPreview = "Image URL must end in .png, .jpg, .jpeg";
+      if (imgURL1.length > 0 && !validateImg(imgURL1)) newErrors.imgURL1 = "Image URL must end in .png, .jpg, .jpeg";
+      if (imgURL2.length > 0 && !validateImg(imgURL2)) newErrors.imgURL2 = "Image URL must end in .png, .jpg, .jpeg";
+      if (imgURL3.length > 0 && !validateImg(imgURL3)) newErrors.imgURL3 = "Image URL must end in .png, .jpg, .jpeg";
+      if (imgURL4.length > 0 && !validateImg(imgURL4)) newErrors.imgURL4 = "Image URL must end in .png, .jpg, .jpeg";
+    }
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return false
@@ -231,7 +244,7 @@ const SpotForm = ({ spot, formType }) => {
       </div>
       <hr />
       <div>
-        <input type="submit" value="Create Spot" />
+        <input type="submit" value={buttonText} />
       </div>
     </form>
   </>)

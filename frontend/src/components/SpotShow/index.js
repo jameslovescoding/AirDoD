@@ -18,11 +18,7 @@ const SpotShow = () => {
     alert("Feature Coming Soon...")
   }
 
-  if (!isLoaded) {
-    return (<>
-    </>)
-  }
-  return (<>
+  return (isLoaded && <>
     <h2>{currentSpot.name}</h2>
     <p>{currentSpot.city}, {currentSpot.state}, {currentSpot.country}</p>
     <div>

@@ -7,19 +7,17 @@ import SpotsIndex from '../SpotsIndex';
 const LandingPage = () => {
   const dispatch = useDispatch();
   const spots = useSelector(state => Object.values(state.spots.allSpots));
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(getAllSpots())
+    dispatch(getAllSpots()).then(() => setIsLoaded(true))
   }, [dispatch]);
 
-  if (!Object.keys(spots).length) {
-    return (<>
-      <h2>Loading spot</h2>
-    </>)
-  }
-
-  return (<>
-    <SpotsIndex spots={spots} />
+  return (isLoaded && <>
+    <h2>Welcome to AirDoD</h2>
+    <div>
+      <SpotsIndex spots={spots} />
+    </div>
   </>)
 }
 
