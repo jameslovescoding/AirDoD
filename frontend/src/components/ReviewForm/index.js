@@ -13,6 +13,7 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
   const [stars, setStars] = useState(review.stars);
   const [disableButton, setDisableButton] = useState(true);
   const [error, setError] = useState(null);
+  const buttonText = formType === "create" ? "Submit Your Review" : "Update Your Review";
 
   const handleFormOnSubmit = async (e) => {
     e.preventDefault();
@@ -69,7 +70,7 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
         onChange={(e) => setContent(e.target.value)}
       />
       <StarsInput stars={stars} setStars={setStars} />
-      <input type='submit' value='Submit Your Review' disabled={disableButton} />
+      <input type='submit' value={buttonText} disabled={disableButton} />
     </form>
   </>)
 }
