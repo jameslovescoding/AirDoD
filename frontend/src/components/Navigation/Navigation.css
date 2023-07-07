@@ -1,3 +1,103 @@
 .hidden {
   display: none;
 }
+
+.nav-bar {
+  height: 60px;
+  /*width: 100%;*/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.home-icon {
+  height: 60px;
+  padding-right: 5px;
+}
+
+.home-icon-assembly {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  font-size: x-large;
+  font-family: Roboto, sans-serif;
+  font-weight: bolder;
+  color: #ff66c4;
+}
+
+.right-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+}
+
+.create-new-spot {
+  text-decoration: none;
+  margin-right: 20px;
+  color: black;
+  font-size: small;
+  font-family: Roboto, sans-serif;
+}
+
+.profile-button {
+  height: 40px;
+  width: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-size: larger;
+  border-width: 2px;
+  border-radius: 20px;
+  border-color: black;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: white;
+}
+
+.profile-dropdown-user-info p {
+  margin: 5px 0px;
+  font: Roboto;
+  font-size: small;
+  font-weight: 200;
+}
+
+.profile-dropdown-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.profile-dropdown-button {
+  background-color: white;
+  border: none;
+  font: Roboto;
+  font-size: small;
+  font-weight: 200;
+}
+
+.log-out-button {
+  width: 100%;
+  color: white;
+  background-color: rgb(104, 104, 104);
+  border-radius: 30px;
+  border: 1px solid white;
+  padding: 7px;
+  font: Roboto;
+  font-size: small;
+  font-weight: 200;
+}

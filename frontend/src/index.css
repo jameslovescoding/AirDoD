@@ -1,1 +1,42 @@
 /* TODO Add site wide styles */
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1.625;
+  color: #202013;
+  font-family: Roboto, sans-serif;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.625;
+  color: #202013;
+  font-family: Roboto, sans-serif;
+}
+
+h4 {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.625;
+  color: #202013;
+  font-family: Roboto, sans-serif;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.625;
+  color: #202013;
+  font-family: Roboto, sans-serif;
+}
+
+a[href],
+input[type='submit'],
+input[type='image'],
+label[for],
+select,
+button,
+.pointer {
+  cursor: pointer;
+}
