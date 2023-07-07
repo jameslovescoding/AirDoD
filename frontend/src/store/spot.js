@@ -1,13 +1,9 @@
 import { csrfFetch } from "./csrf";
-import Cookies from 'js-cookie';
+
 // constant for the reducer
 
 const SET_ALL_SPOTS = "spots/setAllSpots";
 const REMOVE_ALL_SPOTS = "spots/removeAllSpots";
-const ADD_SPOT_IN_LIST = "spots/addSpotInList";
-const EDIT_SPOT_IN_LIST = "spots/editSpotInList";
-const REMOVE_SPOT_IN_LIST = "spots/removeSpotInList";
-const ADD_IMAGE_TO_SPOT = "spots/addImageToSpot";
 const SET_SINGLE_SPOT = "spots/setSingleSpot";
 const REMOVE_SINGLE_SPOT = "spots/removeSingleSpot";
 
@@ -170,11 +166,6 @@ const spotReducer = (state = initialState, action) => {
       const newState = { ...state };
       const allSpots = {};
       newState.allSpots = allSpots;
-      return newState;
-    }
-    case ADD_IMAGE_TO_SPOT: {
-      const newState = { ...state };
-      const { payload, id } = action;
       return newState;
     }
     case SET_SINGLE_SPOT: {

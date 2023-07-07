@@ -203,46 +203,48 @@ const SpotForm = ({ spot, formType }) => {
         {errors.price && <p><span className='spot-form-error'>Price is required</span></p>}
       </div>
       <hr />
-      <div>
-        <h3>Liven up your spot with photos</h3>
-        <p>Submit a link to at least one photo to publish your spot.</p>
+      {formType === "create" && (<>
         <div>
-          <input
-            type="text" value={imgURLPreview} placeholder='Preview Image URL'
-            onChange={(e) => setImgURLPreview(e.target.value)}
-          />
-          {errors.imgURLPreview && <p><span className='spot-form-error'>{errors.imgURLPreview}</span></p>}
+          <h3>Liven up your spot with photos</h3>
+          <p>Submit a link to at least one photo to publish your spot.</p>
+          <div>
+            <input
+              type="text" value={imgURLPreview} placeholder='Preview Image URL'
+              onChange={(e) => setImgURLPreview(e.target.value)}
+            />
+            {errors.imgURLPreview && <p><span className='spot-form-error'>{errors.imgURLPreview}</span></p>}
+          </div>
+          <div>
+            <input
+              type="text" value={imgURL1} placeholder='Image URL'
+              onChange={(e) => setImgURL1(e.target.value)}
+            />
+            {errors.imgURL1 && <p><span className='spot-form-error'>{errors.imgURL1}</span></p>}
+          </div>
+          <div>
+            <input
+              type="text" value={imgURL2} placeholder='Image URL'
+              onChange={(e) => setImgURL2(e.target.value)}
+            />
+            {errors.imgURL2 && <p><span className='spot-form-error'>{errors.imgURL2}</span></p>}
+          </div>
+          <div>
+            <input
+              type="text" value={imgURL3} placeholder='Image URL'
+              onChange={(e) => setImgURL3(e.target.value)}
+            />
+            {errors.imgURL3 && <p><span className='spot-form-error'>{errors.imgURL3}</span></p>}
+          </div>
+          <div>
+            <input
+              type="text" value={imgURL4} placeholder='Image URL'
+              onChange={(e) => setImgURL4(e.target.value)}
+            />
+            {errors.imgURL4 && <p><span className='spot-form-error'>{errors.imgURL4}</span></p>}
+          </div>
         </div>
-        <div>
-          <input
-            type="text" value={imgURL1} placeholder='Image URL'
-            onChange={(e) => setImgURL1(e.target.value)}
-          />
-          {errors.imgURL1 && <p><span className='spot-form-error'>{errors.imgURL1}</span></p>}
-        </div>
-        <div>
-          <input
-            type="text" value={imgURL2} placeholder='Image URL'
-            onChange={(e) => setImgURL2(e.target.value)}
-          />
-          {errors.imgURL2 && <p><span className='spot-form-error'>{errors.imgURL2}</span></p>}
-        </div>
-        <div>
-          <input
-            type="text" value={imgURL3} placeholder='Image URL'
-            onChange={(e) => setImgURL3(e.target.value)}
-          />
-          {errors.imgURL3 && <p><span className='spot-form-error'>{errors.imgURL3}</span></p>}
-        </div>
-        <div>
-          <input
-            type="text" value={imgURL4} placeholder='Image URL'
-            onChange={(e) => setImgURL4(e.target.value)}
-          />
-          {errors.imgURL4 && <p><span className='spot-form-error'>{errors.imgURL4}</span></p>}
-        </div>
-      </div>
-      <hr />
+        <hr />
+      </>)}
       <div>
         <input type="submit" value={buttonText} />
       </div>

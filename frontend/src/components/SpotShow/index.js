@@ -3,12 +3,26 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSpotById } from "../../store/spot";
 import { useDispatch, useSelector } from "react-redux";
+import ReviewsIndex from "../ReviewsIndex";
+import ReviewStats from "./ReviewStats";
 
 const SpotShow = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const [isLoaded, setIsLoaded] = useState(false);
   const currentSpot = useSelector(state => state.spots.singleSpot);
+  const {
+    name,
+    city,
+    state,
+    country,
+    Owner: owner,
+    description,
+    price,
+    avgStarRating,
+    numReviews,
+    ownerId
+  } = currentSpot;
 
   useEffect(() => {
     dispatch(getSpotById(spotId)).then(() => setIsLoaded(true))
@@ -19,30 +33,40 @@ const SpotShow = () => {
   }
 
   return (isLoaded && <>
-    <h2>{currentSpot.name}</h2>
-    <p>{currentSpot.city}, {currentSpot.state}, {currentSpot.country}</p>
+    <h2>{name}</h2>
+    <p>{city}, {state}, {country}</p>
     <div>
       {currentSpot.SpotImages.map(imgObj => {
-        return (<img src={imgObj.url} alt={imgObj.url} />)
+        return (<img key={imgObj.url} src={imgObj.url} alt={imgObj.url} />)
       })}
     </div>
     <div>
       <div>
-        <h3>Hosted by {currentSpot.Owner.firstName} {currentSpot.Owner.lastName}</h3>
-        <p>{currentSpot.description}</p>
+        <h3>Hosted by {owner.firstName} {owner.lastName}</h3>
+        <p>{description}</p>
       </div>
       <div>
         <div>
           <div>
-            <p><span>${currentSpot.price}</span> night</p>
-            <p><span><i class="fa-solid fa-star"></i></span> {currentSpot.avgStarRating || "New"}</p>
-            <p>{currentSpot.numReviews} reviews</p>
+            <p><span>${price}</span> night</p>
+            <ReviewStats
+              avgStarRating={avgStarRating}
+              numReviews={numReviews}
+            />
           </div>
           <button onClick={handleReserveButtonPress}>Reserve</button>
         </div>
       </div>
     </div >
+    <hr />
     <div>
+      <ReviewStats
+        avgStarRating={avgStarRating}
+        numReviews={numReviews}
+      />
+    </div>
+    <div>
+      <ReviewsIndex spotId={spotId} ownerId={ownerId} numReviews={numReviews} />
     </div>
   </>)
 
@@ -50,31 +74,3 @@ const SpotShow = () => {
 }
 
 export default SpotShow;
-
-/*
- <h2>{currentSpot.name}</h2>
-      <p>{currentSpot.city}, {currentSpot.state}, {currentSpot.country}</p>
-      <div>
-        {currentSpot.SpotImages.map(imgObj => {
-          return (<img src={imgObj.url} alt={imgObj.url} />)
-        })}
-      </div>
-      <div>
-        <div>
-          <h3>Hosted by {currentSpot.Owner.firstName} {currentSpot.Owner.lastName}</h3>
-          <p>{currentSpot.description}</p>
-        </div>
-        <div>
-          <div>
-            <div>
-              <p><span>${currentSpot.price}</span> night</p>
-              <p><span><i class="fa-solid fa-star"></i></span> {currentSpot.avgStarRating || "New"}</p>
-              <p>{currentSpot.numReviews} reviews</p>
-            </div>
-            <button onClick={handleReserveButtonPress}>Reserve</button>
-          </div>
-        </div>
-      </div >
-      <div>
-      </div>
- */
