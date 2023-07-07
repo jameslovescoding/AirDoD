@@ -23,8 +23,8 @@ const DeleteButtonModal = ({ spot }) => {
   return (<>
     <h2>Confirm Delete</h2>
     <p>Are you sure you want to remove this spot from the listings?</p>
-    <button onClick={handleYesButtonClick}>Yes(Delete Spot)</button>
-    <button onClick={handleNoButtonClick}>No(Keep Spot)</button>
+    <button onClick={handleYesButtonClick}>Yes (Delete Spot)</button>
+    <button onClick={handleNoButtonClick}>No (Keep Spot)</button>
   </>)
 }
 

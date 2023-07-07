@@ -30,7 +30,7 @@ export const getAllReviewsOfCurrentUser = () => async (dispatch) => {
   const response = await csrfFetch(url);
   if (response.ok) {
     const data = await response.json();
-    dispatch(setUser(data));
+    dispatch(setUser(data.Reviews));
   }
   return response;
 };

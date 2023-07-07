@@ -15,7 +15,9 @@ function Navigation({ isLoaded }) {
       </li>
       {isLoaded && (
         <>
-          {sessionUser && <NavLink to="/spots/new">Create a New Spot</NavLink>}
+          {sessionUser && <li>
+            <NavLink to="/spots/new">Create a New Spot</NavLink>
+          </li>}
           <li>
             <ProfileButton user={sessionUser} />
           </li>

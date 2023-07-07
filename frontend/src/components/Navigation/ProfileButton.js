@@ -55,6 +55,12 @@ function ProfileButton({ user }) {
     closeMenu();
   }
 
+  const handleManageReviews = (e) => {
+    e.preventDefault();
+    history.push(`/reviews/current`);
+    closeMenu();
+  }
+
   // use .hidden class and display: none in css to hide the ul
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
@@ -70,6 +76,9 @@ function ProfileButton({ user }) {
             <li>{user.email}</li>
             <li>
               <button onClick={handleManageSpots}>Manage Spots</button>
+            </li>
+            <li>
+              <button onClick={handleManageReviews}>Manage Reviews</button>
             </li>
             <li>
               <button onClick={handleLogout}>Log Out</button>

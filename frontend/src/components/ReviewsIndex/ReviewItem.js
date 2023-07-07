@@ -1,8 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
+import OpenModalButton from "../OpenModalButton";
+import DeleteReviewModal from './DeleteReviewModal';
+import EditReviewForm from "../EditReviewForm";
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, spotId, spotName }) => {
   const firstName = review.User.firstName;
   const date = review.createdAt.split("T")[0];
   const content = review.review;
@@ -26,8 +29,14 @@ const ReviewItem = ({ review }) => {
       <p>{content}</p>
     </div>
     {enableManageButton && <div>
-      <button>Update</button>
-      <button>Delete</button>
+      <OpenModalButton
+        buttonText="Update"
+        modalComponent={<EditReviewForm review={review} spotId={spotId} spotName={spotName} updateType="spot" />}
+      />
+      <OpenModalButton
+        buttonText="Delete"
+        modalComponent={<DeleteReviewModal review={review} spotId={spotId} updateType="spot" />}
+      />
     </div>}
   </div>)
 }

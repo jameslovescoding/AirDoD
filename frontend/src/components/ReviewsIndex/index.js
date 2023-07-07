@@ -6,7 +6,7 @@ import ReviewItem from './ReviewItem';
 import OpenModalButton from '../OpenModalButton';
 import CreateReviewForm from '../CreateReviewForm';
 
-const ReviewsIndex = ({ spotId, ownerId: spotOwnerId, numReviews }) => {
+const ReviewsIndex = ({ spotName, spotId, ownerId: spotOwnerId, numReviews }) => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [enablePostReview, setEnablePostReview] = useState(false);
@@ -47,8 +47,8 @@ const ReviewsIndex = ({ spotId, ownerId: spotOwnerId, numReviews }) => {
         />
         {numReviews === 0 && <p>Be the first to post a review!</p>}
       </div>}
-      {Object.values(reviews).map(review => {
-        return (<ReviewItem key={review.id} review={review} />)
+      {Object.values(reviews).sort((a, b) => b.id - a.id).map(review => {
+        return (<ReviewItem key={review.id} review={review} spotId={spotId} spotName={spotName} />)
       })}
     </div>
   </>);

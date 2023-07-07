@@ -66,7 +66,7 @@ const SpotShow = () => {
       />
     </div>
     <div>
-      <ReviewsIndex spotId={spotId} ownerId={ownerId} numReviews={numReviews} />
+      <ReviewsIndex spotName={name} spotId={spotId} ownerId={ownerId} numReviews={numReviews} />
     </div>
   </>)
 
