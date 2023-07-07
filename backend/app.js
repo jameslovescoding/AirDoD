@@ -22,6 +22,8 @@ app.use(morgan('dev'));
 // parsing cookies
 app.use(cookieParser());
 
+//app.disable('etag');
+
 // parsing JSON bodies of requests
 app.use(express.json());
 
@@ -48,6 +50,16 @@ app.use(
     }
   })
 );
+
+// // Disable 304 response
+// Disable ETag
+app.set('etag', false);
+
+// Disable Last-Modified
+app.use((req, res, next) => {
+  res.setHeader('Last-Modified', false);
+  next();
+});
 
 // Connect all the routes backend/routes/index.js
 app.use(routes);

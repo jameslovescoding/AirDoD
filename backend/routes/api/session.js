@@ -34,7 +34,13 @@ router.post('/', validateLogin, async (req, res, next) => {
   // 401 Invalid Credentials or wrong password
   if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
     res.status(401);
-    return res.json({ message: "Invalid credentials" })
+    const resObj = {
+      message: "Invalid credentials",
+      errors: {
+        invalidCredentials: "Error: The email/username and password you provided doesn't match with our records.",
+      },
+    }
+    return res.json(resObj);
   }
   // extract information needded
   const { id, firstName, lastName, email, username } = user;

@@ -64,7 +64,7 @@ router.get('/', validateGetSpot, async (req, res, next) => {
     const { Reviews, SpotImages } = spotJSON;
     // calculate average rating
     if (Reviews.length) {
-      spotJSON.avgRating = Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length;
+      spotJSON.avgRating = (Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length).toFixed(1);
     } else {
       spotJSON.avgRating = null;
     }
@@ -105,7 +105,7 @@ router.get('/current', async (req, res, next) => {
     //console.log(SpotImages)
     // calculate average rating
     if (Reviews.length) {
-      spotJSON.avgRating = Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length;
+      spotJSON.avgRating = (Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length).toFixed(1);
     } else {
       spotJSON.avgRating = null;
     }
@@ -148,7 +148,7 @@ router.get("/:spotId", validateGetSpotDetail, async (req, res, next) => {
   const resObj = spot.toJSON();
   const { Reviews } = resObj;
   resObj.numReviews = Reviews.length;
-  resObj.avgStarRating = Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length;
+  resObj.avgStarRating = (Reviews.reduce((acc, ele) => { return acc + ele.stars }, 0) / Reviews.length).toFixed(1);
   delete resObj["Reviews"];
   res.json(resObj);
 });
