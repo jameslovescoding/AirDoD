@@ -10,7 +10,7 @@ const SpotIndexItem = ({ spot }) => {
   };
 
   return (<>
-    <div onClick={handleClickOnTile} className='spot-tile pointer'>
+    <div onClick={handleClickOnTile} className='spot-tile pointer hover-shadow'>
       <img className='spot-tile-image' src={`${spot.previewImage}`} alt={`${spot.previewImage}`} />
       <div className='spot-tile-info'>
         <div className='spot-tile-info-first-line'>

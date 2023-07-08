@@ -8,16 +8,18 @@
 .spot-tile {
   padding: 0px;
   border: 0px solid black;
-  border-radius: 10px;
+  border-radius: 19px;
   overflow: clip;
 }
 
 .spot-tile-image {
   width: 100%;
+  box-sizing: border-box;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 20px;
   overflow: clip;
+  padding: 5px;
 }
 
 .spot-tile-info {

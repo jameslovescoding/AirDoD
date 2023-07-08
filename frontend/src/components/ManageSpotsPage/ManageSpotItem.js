@@ -23,16 +23,16 @@ const ManageSpotItem = ({ spot }) => {
     }
   };
 
-  return (<>
+  return (<div className="manage-spot-tile">
     <SpotIndexItem spot={spot} />
-    <div>
-      <button onClick={handleUpdateButtonClick}>Update</button>
+    <div className="manage-spot-buttons">
+      <button className="hover-shadow" onClick={handleUpdateButtonClick}>Update</button>
       <OpenModalButton
         buttonText="Delete"
         modalComponent={<DeleteButtonModal spot={spot} />}
       />
     </div>
-  </>);
+  </div>);
 }
 
 export default ManageSpotItem;

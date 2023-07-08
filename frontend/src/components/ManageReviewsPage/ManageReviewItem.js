@@ -8,13 +8,13 @@ const ManageReviewItem = ({ review }) => {
   const spotId = review.spotId;
   const date = review.createdAt.split("T")[0];
   const content = review.review;
-  return (<div>
-    <div>
-      <h4>{spotName}</h4>
-      <p>{date}</p>
+  return (<div className="review-item">
+    <div className="review-content">
+      <h4 className="review-content-name">{spotName}</h4>
+      <p className="review-content-date">{date}</p>
       <p>{content}</p>
     </div>
-    <div>
+    <div className="review-item-buttons">
       <OpenModalButton
         buttonText="Update"
         modalComponent={<EditReviewForm review={review} spotId={spotId} spotName={spotName} updateType="user" />}

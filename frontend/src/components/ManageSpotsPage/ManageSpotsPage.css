@@ -1,0 +1,35 @@
+.manage-spot-title-section {
+  padding: 0px 20px 20px;
+}
+
+.create-spot-button {
+  color: white;
+  font-size: 18px;
+  background-color: #ff5a60;
+  border: 0px solid rgb(0, 0, 0);
+  padding: 7px 13px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.manage-spot-buttons {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  padding: 5px;
+}
+
+.manage-spot-buttons button {
+  color: white;
+  background-color: #ff5a60;
+  border: 0px solid rgb(0, 0, 0);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.manage-spot-tile {
+  margin-bottom: 50px;
+}

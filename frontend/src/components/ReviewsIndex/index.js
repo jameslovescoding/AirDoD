@@ -41,8 +41,8 @@ const ReviewsIndex = ({ spotName, spotId, ownerId: spotOwnerId, numReviews }) =>
 
   return (isLoaded && <>
     <div>
-      {enablePostReview && <div>
-        <OpenModalButton className="red"
+      {enablePostReview && <div className='post-review-button-section'>
+        <OpenModalButton
           buttonText="Post Your Review"
           modalComponent={<CreateReviewForm spotId={spotId} />}
         />

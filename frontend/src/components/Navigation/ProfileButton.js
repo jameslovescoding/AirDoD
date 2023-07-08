@@ -66,7 +66,7 @@ function ProfileButton({ user }) {
 
   return (
     <div>
-      <button className="profile-button" onClick={openMenu}>
+      <button className="profile-button hover-shadow" onClick={openMenu}>
         <i class="fa-solid fa-bars"></i>
         <i className="fas fa-user-circle" />
       </button>
@@ -78,9 +78,9 @@ function ProfileButton({ user }) {
           </div>
           <hr />
           <div className="profile-dropdown-buttons">
-            <button className="profile-dropdown-button" onClick={handleManageSpots}>Manage Spots</button>
-            <button className="profile-dropdown-button" onClick={handleManageReviews}>Manage Reviews</button>
-            <button className="log-out-button" onClick={handleLogout}>Log Out</button>
+            <button className="profile-dropdown-button hover-outline" onClick={handleManageSpots}>Manage Spots</button>
+            <button className="profile-dropdown-button hover-outline" onClick={handleManageReviews}>Manage Reviews</button>
+            <button className="log-out-button hover-shadow" onClick={handleLogout}>Log Out</button>
           </div>
         </div>
       ) : (

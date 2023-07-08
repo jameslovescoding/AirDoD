@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSpotsForCurrentUser } from '../../store/spot';
 import ManageSpotItem from './ManageSpotItem';
+import "./ManageSpotsPage.css";
 
 const ManageSpotsPage = () => {
   const dispatch = useDispatch();
@@ -23,9 +24,11 @@ const ManageSpotsPage = () => {
   };
 
   return (sessionUser && <>
-    <h2>Manage Spots</h2>
-    <button onClick={handleCreateButtonClick}>Create a New Spot</button>
-    {isLoaded && <div>
+    <div className='manage-spot-title-section'>
+      <h2>Manage Spots</h2>
+      <button className="create-spot-button hover-shadow" onClick={handleCreateButtonClick}>Create a New Spot</button>
+    </div>
+    {isLoaded && <div className='spot-tile-container'>
       {spots.map(spot => {
         return (
           <ManageSpotItem spot={spot} />

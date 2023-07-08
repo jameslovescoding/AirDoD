@@ -47,7 +47,7 @@ const SpotShow = () => {
         <p>{description}</p>
       </div>
       <div className='spot-show-order'>
-        <div className='spot-show-card'>
+        <div className='spot-show-card hover-shadow'>
           <div className='spot-show-card-first-line'>
             <p><span className='spot-show-price'>${price}</span> / night</p>
             <div className='review-stats-card'>

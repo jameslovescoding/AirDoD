@@ -17,7 +17,7 @@ function Navigation({ isLoaded }) {
       <div className='right-section'>{isLoaded && (
         <>
           {sessionUser &&
-            <NavLink className="create-new-spot" to="/spots/new">Create a New Spot</NavLink>
+            <NavLink className="create-new-spot hover-shadow" to="/spots/new">Create a New Spot</NavLink>
           }
           <ProfileButton user={sessionUser} />
         </>

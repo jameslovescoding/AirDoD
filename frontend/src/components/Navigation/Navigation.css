@@ -39,6 +39,8 @@
 }
 
 .create-new-spot {
+  padding: 10px 15px;
+  border-radius: 30px;
   text-decoration: none;
   margin-right: 20px;
   color: black;
@@ -92,19 +94,28 @@
 }
 
 .profile-dropdown-button {
+  padding: 7px 14px;
+  border-radius: 30px;
   background-color: white;
-  border: none;
+  border: 1px solid white;
   font: Roboto;
   font-size: small;
   font-weight: 200;
+  transition: border-color 0.2s ease;
+}
+
+.profile-dropdown-button:hover {
+  border: 1px solid black;
 }
 
 .log-out-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
   width: 100%;
   color: white;
   background-color: rgb(104, 104, 104);
   border-radius: 30px;
-  border: 1px solid white;
+  border: 1px solid rgb(104, 104, 104);
   padding: 7px;
   font: Roboto;
   font-size: small;

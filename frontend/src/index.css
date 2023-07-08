@@ -58,3 +58,21 @@ button,
   margin: 20px auto;
   max-width: 600px;
 }
+
+.hover-shadow {
+  transition: box-shadow 0.2s ease;
+}
+
+.hover-shadow:hover {
+  box-shadow:
+    -5px -5px 15px rgba(0, 0, 0, 0.2),
+    5px 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hover-outline {
+  transition: border-color 0.2s ease;
+}
+
+.hover-outline:hover {
+  border: 1px solid rgb(0, 0, 0);
+}
