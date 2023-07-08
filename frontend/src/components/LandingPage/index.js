@@ -14,7 +14,7 @@ const LandingPage = () => {
   }, [dispatch]);
 
   return (isLoaded && <>
-    <div>
+    <div className='landing-page'>
       <SpotsIndex spots={spots} />
     </div>
   </>)

@@ -1,0 +1,68 @@
+.spot-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.spot-form-section {
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 30px;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 30px;
+}
+
+.spot-form input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid lightgray;
+  margin: 10px 0px;
+}
+
+.spot-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid lightgray;
+  margin: 10px 0px;
+  min-height: 300px;
+  resize: none;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+}
+
+.spot-form input[type="Number"] {
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid lightgray;
+  margin: 10px 0px;
+}
+
+.spot-form input[type="Submit"] {
+  padding: 10px 40px;
+  font-size: 20px;
+  background-color: #ff5a60;
+  border: 0px solid #ff5a60;
+  color: white;
+  border-radius: 30px;
+  margin: 20px 0px;
+}
+
+.spot-form-button-section {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.spot-form-error {
+  color: red;
+  padding: 0px;
+  margin: 0px;
+}

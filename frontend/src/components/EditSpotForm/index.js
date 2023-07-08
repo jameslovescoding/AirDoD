@@ -15,10 +15,10 @@ const EditSpotForm = () => {
     dispatch(getSpotById(spotId)).then(() => setIsLoaded(true))
   }, [dispatch]);
 
-  return (<>
-    <h2>Update your spot</h2>
+  return (<div className='spot-form-page'>
+    <h1>Update your spot</h1>
     {isLoaded && <SpotForm spot={spot} formType="update" />}
-  </>)
+  </div>)
 }
 
 export default EditSpotForm;

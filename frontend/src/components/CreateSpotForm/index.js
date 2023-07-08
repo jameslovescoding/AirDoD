@@ -14,10 +14,10 @@ const CreateSpotForm = () => {
     "price": 0
   };
 
-  return (<>
-    <h2>Create a new Spot</h2>
+  return (<div className='spot-form-page'>
+    <h1>Create a new Spot</h1>
     <SpotForm spot={spot} formType="create" />
-  </>)
+  </div>)
 }
 
 export default CreateSpotForm;

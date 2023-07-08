@@ -1,0 +1,85 @@
+.spot-show {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.spot-show-images {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.spot-show-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.spot-show-info {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+}
+
+.spot-show-card {
+  border: 0px solid black;
+  border-radius: 25px;
+  padding: 10px 25px 25px 25px;
+  margin: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow:
+    -10px -10px 30px rgba(0, 0, 0, 0.2),
+    10px 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.spot-show-card button {
+  width: 100%;
+  color: white;
+  font-size: 18px;
+  background-color: #ff5a60;
+  border: 0px solid rgb(0, 0, 0);
+  padding: 7px 13px;
+  border-radius: 8px;
+}
+
+.spot-show-price {
+  font-weight: bolder;
+}
+
+.spot-show-card-first-line {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-stats-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}
+
+.review-stats-reviews {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 25px;
+}
+
+.review-stats-reviews p,
+.review-stats-reviews span {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.spot-show-hr {
+  width: 100%;
+  border: 1px solid lightgray;
+}

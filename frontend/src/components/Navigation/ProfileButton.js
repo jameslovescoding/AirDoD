@@ -76,7 +76,7 @@ function ProfileButton({ user }) {
             <p>Hello, {user.firstName}-{user.lastName}</p>
             <p>{user.email}</p>
           </div>
-          <hr></hr>
+          <hr />
           <div className="profile-dropdown-buttons">
             <button className="profile-dropdown-button" onClick={handleManageSpots}>Manage Spots</button>
             <button className="profile-dropdown-button" onClick={handleManageReviews}>Manage Reviews</button>

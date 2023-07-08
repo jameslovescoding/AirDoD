@@ -21,4 +21,151 @@
 #modal-content {
   position: absolute;
   background-color: white;
+  border-radius: 25px;
+  overflow: hidden;
+  padding: 25px;
+}
+
+
+/*User Login and Sign Up Modal*/
+.user-modal {
+  width: 400px;
+}
+
+.user-modal-heading {
+  font-family: Roboto, sans-serif;
+  font-size: 24px;
+  margin: 0px 0px 20px 0px;
+}
+
+.user-modal-form {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0px;
+  margin: 0px;
+  gap: 10px;
+}
+
+.user-modal-form label {
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  margin: 0px;
+}
+
+.user-modal-form input {
+  padding: 5px 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: 1px solid lightgray;
+}
+
+.user-modal-form input[type="submit"] {
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: #ff5a60;
+  border: 0px solid #ff5a60;
+  color: white;
+  border-radius: 30px;
+  margin: 20px 0px;
+}
+
+.user-modal-form .error-message {
+  color: red;
+  padding: 0px;
+  margin: 0px;
+}
+
+/* Create and Edit Review */
+
+.review-modal {
+  width: 400px;
+}
+
+.review-modal-heading {
+  margin: 0px;
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+  word-break: break-word;
+}
+
+.review-modal-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  margin: 0px auto;
+  gap: 10px;
+}
+
+.review-modal-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 200px;
+  padding: 20px;
+  border-radius: 25px;
+  margin: 30px 0px;
+  resize: none;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+}
+
+.starsRating {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+  margin: 0px 0px 10px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.starsRating ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+.review-modal-form input[type="submit"] {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #ff5a60;
+  border: 0px solid #ff5a60;
+  color: white;
+  border-radius: 30px;
+  margin: 20px 0px;
+}
+
+/* Delete Modal */
+
+.delete-modal-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 0px solid #ff5a60;
+  color: white;
+  border-radius: 30px;
+  margin: 10px 0px;
+}
+
+.delete-yes {
+  background-color: #ff5a60;
+}
+
+.delete-no {
+  background-color: rgb(100, 100, 100);
 }

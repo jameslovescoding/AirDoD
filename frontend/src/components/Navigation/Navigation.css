@@ -10,6 +10,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  border-bottom: 1px solid lightgrey;
 }
 
 .home-icon {
@@ -26,7 +27,7 @@
   font-size: x-large;
   font-family: Roboto, sans-serif;
   font-weight: bolder;
-  color: #ff66c4;
+  color: #ff5a60;
 }
 
 .right-section {
@@ -50,7 +51,8 @@
   width: 80px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 0px 11px 0px 15px;
   align-items: center;
   font-size: larger;
   border-width: 2px;
@@ -62,10 +64,13 @@
   position: absolute;
   top: 80px;
   right: 20px;
-  border: 2px solid black;
-  border-radius: 5px;
+  border: 0px solid black;
+  border-radius: 15px;
   padding: 15px;
   background-color: white;
+  box-shadow:
+    -10px -10px 30px rgba(0, 0, 0, 0.2),
+    10px 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .profile-dropdown-user-info p {
@@ -73,6 +78,10 @@
   font: Roboto;
   font-size: small;
   font-weight: 200;
+}
+
+.profile-dropdown hr {
+  margin: 15px 0px;
 }
 
 .profile-dropdown-buttons {

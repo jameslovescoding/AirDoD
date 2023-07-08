@@ -56,13 +56,12 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
     }
   }, [content, stars])
 
-  return (<>
-    <form onSubmit={handleFormOnSubmit}>
-      {formType === "create" && <h2>How was your stay?</h2>}
-      {formType === "update" && (<>
-        <h2>How was your stay at</h2>
-        <h2>{spotName}?</h2>
-      </>)}
+  return (<div className='review-modal'>
+    {formType === "create" && <h2 className='review-modal-heading'>How was your stay?</h2>}
+    {formType === "update" && (<>
+      <h2 className='review-modal-heading'>How was your stay at "{spotName}"?</h2>
+    </>)}
+    <form className="review-modal-form" onSubmit={handleFormOnSubmit}>
       {error && <p>{error}</p>}
       <textarea
         value={content}
@@ -72,7 +71,7 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
       <StarsInput stars={stars} setStars={setStars} />
       <input type='submit' value={buttonText} disabled={disableButton} />
     </form>
-  </>)
+  </div>)
 }
 
 export default ReviewForm;

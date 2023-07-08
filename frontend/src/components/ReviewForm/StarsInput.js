@@ -5,7 +5,7 @@ const StarsInput = ({ stars, setStars }) => {
   // store the temperary stars durin the hover
   const [hoverStars, setHoverStars] = useState(stars);
   const ratings = [1, 2, 3, 4, 5];
-  return (<div>
+  return (<div className="starsRating">
     <ul>
       {ratings.map(rating => {
         return (<i
@@ -16,8 +16,8 @@ const StarsInput = ({ stars, setStars }) => {
           onMouseLeave={() => setHoverStars(stars)}
         ></i>);
       })}
-      <span> Stars </span>
     </ul>
+    <span> Stars </span>
   </div>);
 }
 
