@@ -1,0 +1,63 @@
+@media (max-width: 576px) {
+  .spot-tile-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .spot-tile-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+}
+
+@media (min-width: 769px) {
+  .spot-tile-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+  }
+}
+
+.spot-tile {
+  padding: 0px;
+  border: 0px solid black;
+  border-radius: 19px;
+  overflow: clip;
+}
+
+.spot-tile-image {
+  width: 100%;
+  box-sizing: border-box;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 20px;
+  overflow: clip;
+  padding: 5px;
+}
+
+.spot-tile-info {
+  padding: 15px;
+}
+
+.spot-tile-info p {
+  margin: 0px 0px;
+}
+
+.spot-tile-info-first-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.spot-tile-price {
+  font-weight: bolder;
+}

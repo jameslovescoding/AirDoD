@@ -3,6 +3,7 @@ import { useState } from "react";
 import { createNewSpot, editSpotById, addImageToSpotById } from "../../store/spot";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
+import './SpotForm.css';
 
 const SpotForm = ({ spot, formType }) => {
   const dispatch = useDispatch();
@@ -130,8 +131,8 @@ const SpotForm = ({ spot, formType }) => {
   return (<>
     <button onClick={enterDemoSpotInfo1}>Enter demo</button>
     <button onClick={clearForm}>Clear form</button>
-    <form onSubmit={handleFormOnSubmit}>
-      <div>
+    <form className="spot-form" onSubmit={handleFormOnSubmit}>
+      <div className='spot-form-section'>
         <h3>Where's your place located?</h3>
         <p>Guests will only get your exact address once they booked a reservation.</p>
         <div>
@@ -160,18 +161,16 @@ const SpotForm = ({ spot, formType }) => {
               onChange={(e) => setCity(e.target.value)}
             />
           </label>
-          <span>, </span>
           <label>
             State {errors.state && <span className='spot-form-error'>State is required</span>}
             <input
-              type="text" value={state} placeholder="STATE"
+              type="text" value={state} placeholder="State"
               onChange={(e) => setState(e.target.value)}
             />
           </label>
         </div>
       </div>
-      <hr />
-      <div>
+      <div className='spot-form-section'>
         <h3>Describe your place to guests</h3>
         <p>Mention the best features ofyour place, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
         <textarea
@@ -180,8 +179,7 @@ const SpotForm = ({ spot, formType }) => {
         />
         {errors.description && <p><span className='spot-form-error'>Description needs a minimum of 30 characters</span></p>}
       </div>
-      <hr />
-      <div>
+      <div className='spot-form-section'>
         <h3>Create a title for your spot</h3>
         <p>Catch guests' attention with a spot title that hightlights what makes your place special.</p>
         <input
@@ -190,8 +188,7 @@ const SpotForm = ({ spot, formType }) => {
         />
         {errors.name && <p><span className='spot-form-error'>Name is required</span></p>}
       </div>
-      <hr />
-      <div>
+      <div className='spot-form-section'>
         <h3>Set a base price for your spot</h3>
         <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
         <label>
@@ -202,50 +199,46 @@ const SpotForm = ({ spot, formType }) => {
         </label>
         {errors.price && <p><span className='spot-form-error'>Price is required</span></p>}
       </div>
-      <hr />
-      {formType === "create" && (<>
+      {formType === "create" && (<div className='spot-form-section'>
+        <h3>Liven up your spot with photos</h3>
+        <p>Submit a link to at least one photo to publish your spot.</p>
         <div>
-          <h3>Liven up your spot with photos</h3>
-          <p>Submit a link to at least one photo to publish your spot.</p>
-          <div>
-            <input
-              type="text" value={imgURLPreview} placeholder='Preview Image URL'
-              onChange={(e) => setImgURLPreview(e.target.value)}
-            />
-            {errors.imgURLPreview && <p><span className='spot-form-error'>{errors.imgURLPreview}</span></p>}
-          </div>
-          <div>
-            <input
-              type="text" value={imgURL1} placeholder='Image URL'
-              onChange={(e) => setImgURL1(e.target.value)}
-            />
-            {errors.imgURL1 && <p><span className='spot-form-error'>{errors.imgURL1}</span></p>}
-          </div>
-          <div>
-            <input
-              type="text" value={imgURL2} placeholder='Image URL'
-              onChange={(e) => setImgURL2(e.target.value)}
-            />
-            {errors.imgURL2 && <p><span className='spot-form-error'>{errors.imgURL2}</span></p>}
-          </div>
-          <div>
-            <input
-              type="text" value={imgURL3} placeholder='Image URL'
-              onChange={(e) => setImgURL3(e.target.value)}
-            />
-            {errors.imgURL3 && <p><span className='spot-form-error'>{errors.imgURL3}</span></p>}
-          </div>
-          <div>
-            <input
-              type="text" value={imgURL4} placeholder='Image URL'
-              onChange={(e) => setImgURL4(e.target.value)}
-            />
-            {errors.imgURL4 && <p><span className='spot-form-error'>{errors.imgURL4}</span></p>}
-          </div>
+          <input
+            type="text" value={imgURLPreview} placeholder='Preview Image URL'
+            onChange={(e) => setImgURLPreview(e.target.value)}
+          />
+          {errors.imgURLPreview && <p><span className='spot-form-error'>{errors.imgURLPreview}</span></p>}
         </div>
-        <hr />
-      </>)}
-      <div>
+        <div>
+          <input
+            type="text" value={imgURL1} placeholder='Image URL'
+            onChange={(e) => setImgURL1(e.target.value)}
+          />
+          {errors.imgURL1 && <p><span className='spot-form-error'>{errors.imgURL1}</span></p>}
+        </div>
+        <div>
+          <input
+            type="text" value={imgURL2} placeholder='Image URL'
+            onChange={(e) => setImgURL2(e.target.value)}
+          />
+          {errors.imgURL2 && <p><span className='spot-form-error'>{errors.imgURL2}</span></p>}
+        </div>
+        <div>
+          <input
+            type="text" value={imgURL3} placeholder='Image URL'
+            onChange={(e) => setImgURL3(e.target.value)}
+          />
+          {errors.imgURL3 && <p><span className='spot-form-error'>{errors.imgURL3}</span></p>}
+        </div>
+        <div>
+          <input
+            type="text" value={imgURL4} placeholder='Image URL'
+            onChange={(e) => setImgURL4(e.target.value)}
+          />
+          {errors.imgURL4 && <p><span className='spot-form-error'>{errors.imgURL4}</span></p>}
+        </div>
+      </div>)}
+      <div className='spot-form-button-section'>
         <input type="submit" value={buttonText} />
       </div>
     </form>

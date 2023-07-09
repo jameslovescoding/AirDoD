@@ -5,6 +5,7 @@ import { getSpotById } from "../../store/spot";
 import { useDispatch, useSelector } from "react-redux";
 import ReviewsIndex from "../ReviewsIndex";
 import ReviewStats from "./ReviewStats";
+import './SpotShow.css';
 
 const SpotShow = () => {
   const dispatch = useDispatch();
@@ -32,34 +33,37 @@ const SpotShow = () => {
     alert("Feature Coming Soon...")
   }
 
-  return (isLoaded && <>
+  return (isLoaded && <div className='spot-show'>
     <h2>{name}</h2>
     <p>{city}, {state}, {country}</p>
-    <div>
+    <div className='spot-show-images'>
       {currentSpot.SpotImages.map(imgObj => {
-        return (<img key={imgObj.url} src={imgObj.url} alt={imgObj.url} />)
+        const imageClassName = imgObj.preview ? 'spot-show-image spot-show-preview' : 'spot-show-image';
+        return (<img className={imageClassName} key={imgObj.url} src={imgObj.url} alt={imgObj.url} />)
       })}
     </div>
-    <div>
-      <div>
+    <div className='spot-show-info'>
+      <div className='spot-show-description'>
         <h3>Hosted by {owner.firstName} {owner.lastName}</h3>
         <p>{description}</p>
       </div>
-      <div>
-        <div>
-          <div>
-            <p><span>${price}</span> night</p>
-            <ReviewStats
-              avgStarRating={avgStarRating}
-              numReviews={numReviews}
-            />
+      <div className='spot-show-order'>
+        <div className='spot-show-card hover-shadow'>
+          <div className='spot-show-card-first-line'>
+            <p><span className='spot-show-price'>${price}</span> / night</p>
+            <div className='review-stats-card'>
+              <ReviewStats
+                avgStarRating={avgStarRating}
+                numReviews={numReviews}
+              />
+            </div>
           </div>
           <button onClick={handleReserveButtonPress}>Reserve</button>
         </div>
       </div>
     </div >
-    <hr />
-    <div>
+    <hr className='spot-show-hr' />
+    <div className='review-stats-reviews'>
       <ReviewStats
         avgStarRating={avgStarRating}
         numReviews={numReviews}
@@ -68,7 +72,7 @@ const SpotShow = () => {
     <div>
       <ReviewsIndex spotName={name} spotId={spotId} ownerId={ownerId} numReviews={numReviews} />
     </div>
-  </>)
+  </div>)
 
 
 }

@@ -14,8 +14,7 @@ const LandingPage = () => {
   }, [dispatch]);
 
   return (isLoaded && <>
-    <h2>Welcome to AirDoD</h2>
-    <div>
+    <div className='landing-page'>
       <SpotsIndex spots={spots} />
     </div>
   </>)

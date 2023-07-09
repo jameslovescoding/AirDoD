@@ -1,3 +1,124 @@
 .hidden {
   display: none;
 }
+
+.nav-bar {
+  height: 60px;
+  /*width: 100%;*/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid lightgrey;
+}
+
+.home-icon {
+  height: 60px;
+  padding-right: 5px;
+}
+
+.home-icon-assembly {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  font-size: x-large;
+  font-family: Roboto, sans-serif;
+  font-weight: bolder;
+  color: #ff5a60;
+}
+
+.right-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+}
+
+.create-new-spot {
+  padding: 10px 15px;
+  border-radius: 30px;
+  text-decoration: none;
+  margin-right: 20px;
+  color: black;
+  font-size: small;
+  font-family: Roboto, sans-serif;
+}
+
+.profile-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 7px 10px 7px 20px;
+  align-items: center;
+  font-size: 16px;
+  border-width: 2px;
+  border-radius: 50px;
+  border-color: black;
+  background-color: white;
+  gap: 17px;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 90px;
+  right: 20px;
+  border: 0px solid black;
+  border-radius: 15px;
+  padding: 15px;
+  background-color: white;
+  box-shadow:
+    -10px -10px 30px rgba(0, 0, 0, 0.2),
+    10px 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.profile-dropdown-user-info p {
+  margin: 5px 0px;
+  font: Roboto;
+  font-size: small;
+  font-weight: 200;
+}
+
+.profile-dropdown hr {
+  margin: 15px 0px;
+}
+
+.profile-dropdown-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.profile-dropdown-button {
+  padding: 7px 14px;
+  border-radius: 30px;
+  background-color: white;
+  border: 1px solid white;
+  font: Roboto;
+  font-size: small;
+  font-weight: 200;
+  transition: border-color 0.2s ease;
+}
+
+.profile-dropdown-button:hover {
+  border: 1px solid black;
+}
+
+.log-out-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  color: white;
+  background-color: rgb(104, 104, 104);
+  border-radius: 30px;
+  border: 1px solid rgb(104, 104, 104);
+  padding: 7px;
+  font: Roboto;
+  font-size: small;
+  font-weight: 200;
+}

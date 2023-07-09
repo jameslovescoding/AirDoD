@@ -5,6 +5,7 @@ import { getAllReviewsOfSpot } from '../../store/review';
 import ReviewItem from './ReviewItem';
 import OpenModalButton from '../OpenModalButton';
 import CreateReviewForm from '../CreateReviewForm';
+import "./ReviewsIndex.css";
 
 const ReviewsIndex = ({ spotName, spotId, ownerId: spotOwnerId, numReviews }) => {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const ReviewsIndex = ({ spotName, spotId, ownerId: spotOwnerId, numReviews }) =>
 
   return (isLoaded && <>
     <div>
-      {enablePostReview && <div>
+      {enablePostReview && <div className='post-review-button-section'>
         <OpenModalButton
           buttonText="Post Your Review"
           modalComponent={<CreateReviewForm spotId={spotId} />}

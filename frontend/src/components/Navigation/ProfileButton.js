@@ -65,41 +65,40 @@ function ProfileButton({ user }) {
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+    <div>
+      <button className="profile-button hover-shadow" onClick={openMenu}>
+        <i class="fa-solid fa-bars"></i>
+        <i class="fa-regular fa-circle-user fa-2x"></i>
       </button>
-      <ul className={ulClassName} ref={ulRef}>
-        {user ? (
-          <>
-            <li>Hello, {user.firstName}-{user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={handleManageSpots}>Manage Spots</button>
-            </li>
-            <li>
-              <button onClick={handleManageReviews}>Manage Reviews</button>
-            </li>
-            <li>
-              <button onClick={handleLogout}>Log Out</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <OpenModalMenuItem
-              itemText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
-            <OpenModalMenuItem
-              itemText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
-          </>
-        )}
-      </ul>
-    </>
+      {user ? (
+        <div className={ulClassName} ref={ulRef}>
+          <div className="profile-dropdown-user-info">
+            <p>Hello, {user.firstName}!</p>
+            <p>{user.email}</p>
+          </div>
+          <hr />
+          <div className="profile-dropdown-buttons">
+            <button className="profile-dropdown-button hover-outline" onClick={handleManageSpots}>Manage Spots</button>
+            <button className="profile-dropdown-button hover-outline" onClick={handleManageReviews}>Manage Reviews</button>
+            <button className="log-out-button hover-shadow" onClick={handleLogout}>Log Out</button>
+          </div>
+        </div>
+      ) : (
+        <div className={ulClassName} ref={ulRef}>
+          <OpenModalMenuItem
+            itemText="Log In"
+            onItemClick={closeMenu}
+            modalComponent={<LoginFormModal />}
+          />
+          <hr></hr>
+          <OpenModalMenuItem
+            itemText="Sign Up"
+            onItemClick={closeMenu}
+            modalComponent={<SignupFormModal />}
+          />
+        </div>
+      )}
+    </div>
   );
 }
 

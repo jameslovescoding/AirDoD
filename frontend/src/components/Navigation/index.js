@@ -1,29 +1,30 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import iconSrc from './favicon.png';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
 
+  const history = useHistory();
+
   const sessionUser = useSelector(state => state.session.user);
 
-  return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li>
-      {isLoaded && (
+  return (<>
+    <div className='nav-bar'>
+      <NavLink className="home-icon-assembly" to="/"><img className="home-icon" src={iconSrc} />AirDoD</NavLink>
+      <div className='right-section'>{isLoaded && (
         <>
-          {sessionUser && <li>
-            <NavLink to="/spots/new">Create a New Spot</NavLink>
-          </li>}
-          <li>
-            <ProfileButton user={sessionUser} />
-          </li>
+          {sessionUser &&
+            <NavLink className="create-new-spot hover-shadow" to="/spots/new">Create a New Spot</NavLink>
+          }
+          <ProfileButton user={sessionUser} />
         </>
-      )}
-    </ul>
+      )}</div>
+    </div>
+  </>
+
   );
 }
 

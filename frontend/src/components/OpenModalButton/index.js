@@ -17,7 +17,7 @@ function OpenModalButton({ modalComponent, buttonText, onButtonClick, onModalClo
   };
 
   return (
-    <button onClick={onClick}>
+    <button className="hover-shadow" buttonText={buttonText} onClick={onClick}>
       {buttonText}
     </button>
   );

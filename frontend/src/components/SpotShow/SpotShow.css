@@ -1,0 +1,128 @@
+.spot-show {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  max-width: 1000px;
+  margin: 0px auto;
+}
+
+/* spot show images and info section*/
+
+@media (max-width: 576px) {
+  .spot-show-images {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0px;
+  }
+
+  .spot-show-info {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .spot-show-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0px;
+  }
+
+  .spot-show-info {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 769px) {
+  .spot-show-images {
+    display: grid;
+    grid-template-areas:
+      "a b c"
+      "a d e";
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 0px;
+  }
+
+  .spot-show-preview {
+    grid-area: a;
+  }
+
+  .spot-show-info {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+  }
+}
+
+/* */
+
+.spot-show-image {
+  width: 100%;
+  box-sizing: border-box;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 2px solid white;
+  border-radius: 5px;
+}
+
+.spot-show-card {
+  border: 1px solid lightgray;
+  border-radius: 25px;
+  padding: 10px 25px 25px 25px;
+  margin: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.spot-show-card button {
+  width: 100%;
+  color: white;
+  font-size: 18px;
+  background-color: #ff5a60;
+  border: 0px solid rgb(0, 0, 0);
+  padding: 7px 13px;
+  border-radius: 8px;
+}
+
+.spot-show-price {
+  font-weight: bolder;
+}
+
+.spot-show-card-first-line {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-stats-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}
+
+.review-stats-reviews {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-stats-reviews p,
+.review-stats-reviews span {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.spot-show-hr {
+  width: 100%;
+  border: 1px solid lightgray;
+}

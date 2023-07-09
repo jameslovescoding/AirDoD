@@ -13,6 +13,7 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
   const [stars, setStars] = useState(review.stars);
   const [disableButton, setDisableButton] = useState(true);
   const [error, setError] = useState(null);
+  const buttonText = formType === "create" ? "Submit Your Review" : "Update Your Review";
 
   const handleFormOnSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +29,8 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
         closeModal();
       } else {
         const resJSON = await response.json();
-        console.log(resJSON.message);
+        //console.log(resJSON.message);
+        setError(resJSON.message);
       }
     } else if (formType === "update") {
       const response = await dispatch(editReviewById(review.id, newReview));
@@ -42,7 +44,8 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
         closeModal();
       } else {
         const resJSON = await response.json();
-        console.log(resJSON.message);
+        //console.log(resJSON.message);
+        setError(resJSON.message);
       }
     }
   }
@@ -55,23 +58,22 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
     }
   }, [content, stars])
 
-  return (<>
-    <form onSubmit={handleFormOnSubmit}>
-      {formType === "create" && <h2>How was your stay?</h2>}
-      {formType === "update" && (<>
-        <h2>How was your stay at</h2>
-        <h2>{spotName}?</h2>
-      </>)}
-      {error && <p>{error}</p>}
+  return (<div className='review-modal'>
+    {formType === "create" && <h2 className='review-modal-heading'>How was your stay?</h2>}
+    {formType === "update" && (<>
+      <h2 className='review-modal-heading'>How was your stay at "{spotName}"?</h2>
+    </>)}
+    <form className="review-modal-form" onSubmit={handleFormOnSubmit}>
+      {error && <p className='review-error'>{error}</p>}
       <textarea
         value={content}
         placeholder='Leave your review here..'
         onChange={(e) => setContent(e.target.value)}
       />
       <StarsInput stars={stars} setStars={setStars} />
-      <input type='submit' value='Submit Your Review' disabled={disableButton} />
+      <input type='submit' value={buttonText} disabled={disableButton} />
     </form>
-  </>)
+  </div>)
 }
 
 export default ReviewForm;
