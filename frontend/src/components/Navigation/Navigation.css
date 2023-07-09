@@ -49,22 +49,22 @@
 }
 
 .profile-button {
-  height: 40px;
-  width: 80px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0px 11px 0px 15px;
+  padding: 7px 10px 7px 20px;
   align-items: center;
-  font-size: larger;
+  font-size: 16px;
   border-width: 2px;
-  border-radius: 20px;
+  border-radius: 50px;
   border-color: black;
+  background-color: white;
+  gap: 17px;
 }
 
 .profile-dropdown {
   position: absolute;
-  top: 80px;
+  top: 90px;
   right: 20px;
   border: 0px solid black;
   border-radius: 15px;

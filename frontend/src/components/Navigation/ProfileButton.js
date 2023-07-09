@@ -68,12 +68,12 @@ function ProfileButton({ user }) {
     <div>
       <button className="profile-button hover-shadow" onClick={openMenu}>
         <i class="fa-solid fa-bars"></i>
-        <i className="fas fa-user-circle" />
+        <i class="fa-regular fa-circle-user fa-2x"></i>
       </button>
       {user ? (
         <div className={ulClassName} ref={ulRef}>
           <div className="profile-dropdown-user-info">
-            <p>Hello, {user.firstName}-{user.lastName}</p>
+            <p>Hello, {user.firstName}</p>
             <p>{user.email}</p>
           </div>
           <hr />

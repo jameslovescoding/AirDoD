@@ -83,7 +83,7 @@ const LoginFormModal = () => {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      {errors.invalidCredentials && <p className="error-message">{errors.invalidCredentials}</p>}
+      {errors.invalidCredentials && <p className="error-message">The provided credentials were invalid</p>}
       {errors.credential && <p className="error-message">{errors.credential}</p>}
       {errors.password && <p className="error-message">{errors.password}</p>}
       <input type="submit" value="Login" disabled={disableButton} />

@@ -16,7 +16,7 @@ const EditSpotForm = () => {
   }, [dispatch]);
 
   return (<div className='spot-form-page'>
-    <h1>Update your spot</h1>
+    <h1>Update your Spot</h1>
     {isLoaded && <SpotForm spot={spot} formType="update" />}
   </div>)
 }

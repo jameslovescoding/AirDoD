@@ -6,8 +6,25 @@ import DeleteReviewModal from './DeleteReviewModal';
 import EditReviewForm from "../EditReviewForm";
 
 const ReviewItem = ({ review, spotId, spotName }) => {
+  const monthConverter = {
+    "01": "January",
+    "02": "February",
+    "03": "March",
+    "04": "April",
+    "05": "May",
+    "06": "June",
+    "07": "July",
+    "08": "August",
+    "09": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+  }
+
   const firstName = review.User.firstName;
-  const date = review.createdAt.split("T")[0];
+  const fullDate = review.createdAt.split("T")[0];
+  const [year, month, _day] = fullDate.split("-");
+  const date = `${monthConverter[month]} ${year}`;
   const content = review.review;
   const [enableManageButton, setEnableManageButton] = useState(false);
   const sessionUser = useSelector(state => state.session.user);

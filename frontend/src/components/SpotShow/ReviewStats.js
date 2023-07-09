@@ -9,11 +9,13 @@ const ReviewStats = ({ avgStarRating, numReviews }) => {
   if (numReviews === 1 || numReviews === "1") {
     return (<>
       <p><span><i className="fa-solid fa-star"></i></span> {avgStarRating}</p>
+      <p>·</p>
       <p>{numReviews} review</p>
     </>)
   }
   return (<>
     <p><span><i className="fa-solid fa-star"></i></span> {avgStarRating}</p>
+    <p>·</p>
     <p>{numReviews} reviews</p>
   </>)
 }

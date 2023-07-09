@@ -1,5 +1,5 @@
 // frontend/src/components/SignupFormPage/index.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 import { useModal } from "../../context/Modal";
@@ -16,7 +16,15 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const [disableButton, setDisableButton] = useState(true);
 
+  useEffect(() => {
+    if (!email || username.length < 4 || !firstName || !lastName || password.length < 6 || confirmPassword.length < 6) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [email, username, firstName, lastName, password, confirmPassword])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +62,8 @@ function SignupFormModal() {
     setConfirmPassword("");
     setErrors({});
   }
+
+
 
   return (
     <div className="user-modal">
@@ -113,7 +123,7 @@ function SignupFormModal() {
           required
         />
         {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
-        <input type="submit" value="Sign Up" />
+        <input type="submit" value="Sign Up" disabled={disableButton} />
       </form>
       <div className="dev-buttons">
         <button onClick={enterDemoUserInfo}>Demo User</button>
