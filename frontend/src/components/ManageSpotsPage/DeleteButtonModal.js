@@ -20,7 +20,7 @@ const DeleteButtonModal = ({ spot }) => {
     closeModal();
   };
 
-  return (<>
+  return (<div className='delete-modal'>
     <h2 className='review-modal-heading'>Confirm Delete</h2>
     <p>Are you sure you want to remove this spot from the listings?</p>
     <div className='delete-modal-buttons'>
@@ -28,7 +28,7 @@ const DeleteButtonModal = ({ spot }) => {
       <button className="delete-button delete-no" onClick={handleNoButtonClick}>No (Keep Spot)</button>
     </div>
 
-  </>)
+  </div>)
 }
 
 export default DeleteButtonModal;

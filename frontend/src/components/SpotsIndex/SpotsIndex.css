@@ -1,8 +1,28 @@
-.spot-tile-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 20px;
+@media (max-width: 576px) {
+  .spot-tile-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .spot-tile-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+}
+
+@media (min-width: 769px) {
+  .spot-tile-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+  }
 }
 
 .spot-tile {

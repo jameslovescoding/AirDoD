@@ -38,7 +38,8 @@ const SpotShow = () => {
     <p>{city}, {state}, {country}</p>
     <div className='spot-show-images'>
       {currentSpot.SpotImages.map(imgObj => {
-        return (<img className='spot-show-image' key={imgObj.url} src={imgObj.url} alt={imgObj.url} />)
+        const imageClassName = imgObj.preview ? 'spot-show-image spot-show-preview' : 'spot-show-image';
+        return (<img className={imageClassName} key={imgObj.url} src={imgObj.url} alt={imgObj.url} />)
       })}
     </div>
     <div className='spot-show-info'>

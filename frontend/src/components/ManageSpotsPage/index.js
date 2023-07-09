@@ -23,7 +23,7 @@ const ManageSpotsPage = () => {
     history.push("/spots/new");
   };
 
-  return (sessionUser && <>
+  return (sessionUser && <div className='manage-spots-page'>
     <div className='manage-spot-title-section'>
       <h2>Manage Spots</h2>
       <button className="create-spot-button hover-shadow" onClick={handleCreateButtonClick}>Create a New Spot</button>
@@ -35,7 +35,7 @@ const ManageSpotsPage = () => {
         )
       })}
     </div>}
-  </>)
+  </div>)
 }
 
 export default ManageSpotsPage;

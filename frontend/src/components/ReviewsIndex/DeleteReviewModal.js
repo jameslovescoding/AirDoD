@@ -28,14 +28,14 @@ const DeleteReviewModal = ({ review, spotId, updateType }) => {
     closeModal();
   };
 
-  return (<>
+  return (<div className='delete-modal'>
     <h2 className='review-modal-heading'>Confirm Delete</h2>
     <p>Are you sure you want to delete this review?</p>
     <div className='delete-modal-buttons'>
       <button className="delete-button delete-yes" onClick={handleYesButtonClick}>Yes (Delete Review)</button>
       <button className="delete-button delete-no" onClick={handleNoButtonClick}>No (Keep Review)</button>
     </div>
-  </>)
+  </div>)
 }
 
 export default DeleteReviewModal;

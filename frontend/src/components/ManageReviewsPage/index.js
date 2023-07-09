@@ -13,14 +13,14 @@ const ManageReviewsPage = () => {
     dispatch(getAllReviewsOfCurrentUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  return (<>
+  return (<div className='manage-reviews-page'>
     <h2>Manage Reviews</h2>
     {isLoaded && <div>
       {Object.values(reviews).sort((a, b) => b.id - a.id).map(review => {
         return (<ManageReviewItem review={review} />)
       })}
     </div>}
-  </>)
+  </div>)
 }
 
 export default ManageReviewsPage;

@@ -181,3 +181,11 @@ input[type="submit"]:disabled {
   color: #9d9d9d;
   background-color: lightgray;
 }
+
+/* breakpoints */
+
+@media (max-width: 576px) {
+  .delete-modal {
+    max-width: 400px;
+  }
+}
