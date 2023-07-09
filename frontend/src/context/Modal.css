@@ -143,6 +143,10 @@
   margin: 20px 0px;
 }
 
+.review-error {
+  color: red
+}
+
 /* Delete Modal */
 
 .delete-modal-buttons {

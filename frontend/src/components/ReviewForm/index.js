@@ -29,7 +29,8 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
         closeModal();
       } else {
         const resJSON = await response.json();
-        console.log(resJSON.message);
+        //console.log(resJSON.message);
+        setError(resJSON.message);
       }
     } else if (formType === "update") {
       const response = await dispatch(editReviewById(review.id, newReview));
@@ -43,7 +44,8 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
         closeModal();
       } else {
         const resJSON = await response.json();
-        console.log(resJSON.message);
+        //console.log(resJSON.message);
+        setError(resJSON.message);
       }
     }
   }
@@ -62,7 +64,7 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
       <h2 className='review-modal-heading'>How was your stay at "{spotName}"?</h2>
     </>)}
     <form className="review-modal-form" onSubmit={handleFormOnSubmit}>
-      {error && <p>{error}</p>}
+      {error && <p className='review-error'>{error}</p>}
       <textarea
         value={content}
         placeholder='Leave your review here..'

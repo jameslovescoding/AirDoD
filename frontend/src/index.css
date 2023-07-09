@@ -49,6 +49,8 @@ button,
   cursor: pointer;
 }
 
+/* page width control */
+
 .landing-page {
   margin: 20px auto;
   max-width: 1400px;
@@ -59,8 +61,10 @@ button,
   max-width: 600px;
 }
 
+/* hover effects */
+
 .hover-shadow {
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease-in-out;
 }
 
 .hover-shadow:hover {
@@ -70,9 +74,36 @@ button,
 }
 
 .hover-outline {
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease-in-out;
 }
 
 .hover-outline:hover {
   border: 1px solid rgb(0, 0, 0);
+}
+
+/* tooltips */
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: center;
+  width: 200px;
+  right: calc(50% - 100px);
+  bottom: 45%;
+  padding: 5px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-family: Roboto, sans-serif;
+  transition: visibility 0.2s ease-in-out;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
 }

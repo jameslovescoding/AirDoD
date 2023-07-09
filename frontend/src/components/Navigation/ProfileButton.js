@@ -73,7 +73,7 @@ function ProfileButton({ user }) {
       {user ? (
         <div className={ulClassName} ref={ulRef}>
           <div className="profile-dropdown-user-info">
-            <p>Hello, {user.firstName}</p>
+            <p>Hello, {user.firstName}!</p>
             <p>{user.email}</p>
           </div>
           <hr />
