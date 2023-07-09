@@ -174,9 +174,10 @@ const SpotForm = ({ spot, formType }) => {
         <h3>Describe your place to guests</h3>
         <p>Mention the best features ofyour place, any special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
         <textarea
-          value={description} placeholder="Please write at least 30 characters"
+          value={description} placeholder="Please write at least 30 characters" maxlength="500"
           onChange={(e) => setDescription(e.target.value)}
         />
+        <span>{description.length} / 500</span>
         {errors.description && <p><span className='spot-form-error'>Description needs a minimum of 30 characters</span></p>}
       </div>
       <div className='spot-form-section'>
