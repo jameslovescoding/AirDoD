@@ -177,7 +177,7 @@ const SpotForm = ({ spot, formType }) => {
           value={description} placeholder="Please write at least 30 characters" maxlength="500"
           onChange={(e) => setDescription(e.target.value)}
         />
-        <span>{description.length} / 500</span>
+        <p>{description.length} / 500</p>
         {errors.description && <p><span className='spot-form-error'>Description needs a minimum of 30 characters</span></p>}
       </div>
       <div className='spot-form-section'>
