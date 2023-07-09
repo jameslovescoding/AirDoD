@@ -69,7 +69,9 @@ const ReviewForm = ({ review, spotId, spotName, formType, updateType }) => {
         value={content}
         placeholder='Leave your review here..'
         onChange={(e) => setContent(e.target.value)}
+        maxlength="500"
       />
+      <p>{content.length} / 500</p>
       <StarsInput stars={stars} setStars={setStars} />
       <input type='submit' value={buttonText} disabled={disableButton} />
     </form>
