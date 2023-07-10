@@ -57,10 +57,10 @@ const SpotForm = ({ spot, formType }) => {
 
   const handleFormOnSubmit = async (e) => {
     e.preventDefault();
-    console.log("form submit triggered")
+    //console.log("form submit triggered")
     if (validateForm()) {
       // passed the validation
-      console.log("Good to go!")
+      //console.log("Good to go!")
       const newSpot = {
         country,
         address,
@@ -95,7 +95,7 @@ const SpotForm = ({ spot, formType }) => {
       }
     } else {
       // did not pass the validation
-      console.log("Fix issues")
+      //console.log("Fix issues")
     }
   }
 
