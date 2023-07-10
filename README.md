@@ -1,5 +1,31 @@
 # AirDoD
 
+What is AirDoD?
+AirDoD is a portfolio project created by me (James Cao) during the App Academy's Full-stack Web Development program. It's a simplified version of AirBnB, a website offering shared room rental/booking services. It's just for learning purposes.
+
+The website is hosted on Render. Please allow Render a few minutes to build and start: https://airdod.onrender.com
+
+This project uses the following major tools and technologies:
+JavaScript
+Node
+Express
+SQL
+Sequelize
+SQLite3 and Postgres
+React
+Redux
+Thunk
+npm
+Other tools and technologies:
+bcryptjs
+dotenv
+jsonwebtoken
+nodemon
+Softwares:
+VSCode
+Postman
+Chrome
+
 ## Database Schema Design
 
 ![db-schema]
