@@ -1,7 +1,5 @@
 # AirDoD
 
-## Project title: AirDoD
-
 Because we are cloning AirBnb. DoD is like a funny woo face.
 
 ## Project description
