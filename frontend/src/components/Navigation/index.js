@@ -4,6 +4,9 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import iconSrc from './favicon.png';
 import './Navigation.css';
+import DeveloperInfo from '../Footer';
+import OpenModalButton from '../OpenModalButton';
+import OpenModalMenuItem from './OpenModalMenuItem';
 
 function Navigation({ isLoaded }) {
 
@@ -14,6 +17,10 @@ function Navigation({ isLoaded }) {
   return (<>
     <div className='nav-bar'>
       <NavLink className="home-icon-assembly" to="/"><img className="home-icon" src={iconSrc} />AirDoD</NavLink>
+      <OpenModalMenuItem
+        itemText={"About This Website"}
+        modalComponent={<DeveloperInfo />}
+      />
       <div className='right-section'>{isLoaded && (
         <>
           {sessionUser &&
