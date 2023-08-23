@@ -10,6 +10,7 @@ import CreateSpotForm from './components/CreateSpotForm';
 import ManageSpotsPage from './components/ManageSpotsPage';
 import EditSpotForm from './components/EditSpotForm';
 import ManageReviewsPage from './components/ManageReviewsPage';
+import Footer from './components/Footer';
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ function App() {
           <ManageReviewsPage />
         </Route>
       </Switch>
+
     </>
     )
   );

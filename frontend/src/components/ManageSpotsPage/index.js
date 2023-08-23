@@ -26,15 +26,18 @@ const ManageSpotsPage = () => {
   return (sessionUser && <div className='manage-spots-page'>
     <div className='manage-spot-title-section'>
       <h2>Manage Spots</h2>
-      <button className="create-spot-button hover-shadow" onClick={handleCreateButtonClick}>Create a New Spot</button>
+
     </div>
-    {isLoaded && <div className='spot-tile-container'>
-      {spots.map(spot => {
-        return (
-          <ManageSpotItem spot={spot} />
-        )
-      })}
-    </div>}
+    {isLoaded && (<>
+      {spots.length === 0 && <button className="create-spot-button hover-shadow" onClick={handleCreateButtonClick}>Create a New Spot</button>}
+      <div className='spot-tile-container'>
+        {spots.map(spot => {
+          return (
+            <ManageSpotItem spot={spot} />
+          )
+        })}
+      </div>
+    </>)}
   </div>)
 }
 
